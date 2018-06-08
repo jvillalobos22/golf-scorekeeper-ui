@@ -16,7 +16,7 @@ class Matches extends Component {
       <div className="pg_width">
         <div className="matches_list flex_container">
           {matches.map(match =>
-            <MatchCard match={match} className="flex_card" />
+            <MatchCard key={match.id} match={match} className="flex_card" />
           )}
         </div>
       </div>

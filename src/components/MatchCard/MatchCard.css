@@ -4,6 +4,7 @@
   padding: 0.75rem 0.825rem;
   margin-bottom: 1.5rem;
   line-height: 1.5;
+  position: relative;
 }
 
 h3 {
@@ -13,7 +14,40 @@ h3 {
   margin: 0;
 }
 
-.course_location {
+.course_location, .course_par {
   font-size: 1rem;
   font-weight: 300;
+  display: block;
+}
+
+.match_date {
+  position: absolute;  
+  top: 0;
+  right: 0;
+  padding: 0.5rem;
+  font-weight: 300;
+  font-size: 0.825rem;
+}
+
+.match_holes_played {
+  margin-top: 2rem;
+  margin-bottom: 0;
+  font-size: 1.125rem;
+  font-weight: 300;
+}
+
+.score {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 0.5rem;
+  font-size: 1.325rem;
+  color: #799F0C;
+}
+
+.score span {
+  display: block;
+  font-size: 0.825rem;
+  text-align: center;
+  color: #222;
 }

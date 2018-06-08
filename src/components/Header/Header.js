@@ -3,7 +3,9 @@ import './Header.css';
 
 const Header = () => (  
   <header className="app_header">
-    <h1 className="app_title">Juan's Caddy</h1>
+    <div className="pg_width">
+      <h1 className="app_title">Juan's Caddy</h1>
+    </div>
   </header>
 );
 

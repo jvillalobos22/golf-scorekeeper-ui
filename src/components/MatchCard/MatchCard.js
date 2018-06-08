@@ -24,10 +24,13 @@ const MatchCard = ({ match, className }) => {
     <div className={`match_card ${className}`}>
       <h3>{match.course.name}</h3>
       <span className="course_location">{match.course.location}</span>
-      <p>{getPrettyDate(match.date)}</p>
-      <p>Par: {match.course.par}</p>
-      <p>Holes: {match.course.holes}</p>
-      <p>Score: <strong>{getMatchScore(match.holes)}</strong> ({getPrettyScore(match.holes, match.course.par)})</p>
+      <span className="match_date">{getPrettyDate(match.date)}</span>
+      <span className="course_par">Par: {match.course.par}</span>
+      <p className="match_holes_played"><span>{match.course.holes}</span> Holes</p>
+      <div className="score"><span>Score:</span><strong>{getMatchScore(match.holes)}</strong> ({getPrettyScore(match.holes, match.course.par)})</div>
+      <button type="button">
+        Details
+      </button>
     </div>
   )
 };
