@@ -5,19 +5,20 @@ import {
   getPrettyDate,
   getPrettyScore
 } from '../MatchCard/MatchCard';
+import Button from '../Button/Button';
 import './ShowMatchDetails.css';
 
 const ShowMatchDetails = ({match}) => {
   return (
     <div className="pg_width">
-      <Link to="/" ><button type="button">
+      <Link to="/" ><Button>
         Back
-      </button></Link>
+      </Button></Link>
       <div className="course_info">
         <h1>{match.course.name}</h1>
         <span>{match.course.location}</span>
-        <span>{match.course.par}</span>
-        <span>{match.course.holes}</span>
+        <span>Par: {match.course.par}</span>
+        <span>{match.course.holes} Holes</span>
       </div>
       <div className="match_results">
         <span className="score">{getMatchScore(match.holes)} ({getPrettyScore(match.holes, match.course.par)})</span>
@@ -30,7 +31,7 @@ const ShowMatchDetails = ({match}) => {
           <span className="ten">Score</span>
         </div>
       {match.holes.map((hole) => {
-          return <div className= "scorecard_row">
+          return <div key={hole.id} className= "scorecard_row">
           <span className="ten">{hole.id}</span>
           <span className="ten">{hole.par}</span>
           <span className="ten">{hole.score} ({getPrettyScore([hole], hole.par)})</span>

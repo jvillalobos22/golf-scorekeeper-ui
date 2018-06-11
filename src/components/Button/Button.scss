@@ -1,0 +1,16 @@
+.button {
+  display: block;
+  padding: 0.375rem 1.125rem;
+  border: 1px solid #799F0C;
+  background-color: #799F0C;
+  color: #fff;
+  border-spacing: 0;
+  margin: 0;
+  text-decoration: none;
+  text-indent: 0;
+  font-size: 0.75rem;
+}
+
+.button:hover, .button:focus {
+  cursor: pointer;
+}
