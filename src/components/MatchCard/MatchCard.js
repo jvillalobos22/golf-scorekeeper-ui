@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './MatchCard.css';
 import { shortMonths } from '../../helpers/months';
 
@@ -28,9 +29,9 @@ const MatchCard = ({ match, className }) => {
       <span className="course_par">Par: {match.course.par}</span>
       <p className="match_holes_played"><span>{match.course.holes}</span> Holes</p>
       <div className="score"><span>Score:</span><strong>{getMatchScore(match.holes)}</strong> ({getPrettyScore(match.holes, match.course.par)})</div>
-      <button type="button">
+      <Link to={`/matches/${match.id}`} ><button type="button">
         Details
-      </button>
+      </button></Link>
     </div>
   )
 };
