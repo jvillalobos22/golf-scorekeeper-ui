@@ -4,22 +4,7 @@ import './MatchCard.css';
 import { shortMonths } from '../../helpers/months';
 
 const MatchCard = ({ match, className }) => {
-  const getMatchScore = (holes) => {
-    const score = holes.reduce((total, hole) => {
-      return total + hole.score;
-    }, 0);
-    return score;
-  };
-
-  const getPrettyScore = (holes, par) => {
-    const score = getMatchScore(holes);
-    const prefix = (score < par) ? '-' : '+';
-    return `${prefix}${Math.abs(score - par)}`
-  } 
-
-  const getPrettyDate = (date) => {
-    return `${date.getDate()} ${shortMonths[date.getMonth()]} ${date.getFullYear()}`
-  };
+  
 
   return(
     <div className={`match_card ${className}`}>
@@ -36,4 +21,26 @@ const MatchCard = ({ match, className }) => {
   )
 };
 
+const getMatchScore = (holes) => {
+  const score = holes.reduce((total, hole) => {
+    return total + hole.score;
+  }, 0);
+  return score;
+};
+
+const getPrettyScore = (holes, par) => {
+  const score = getMatchScore(holes);
+  const prefix = (score < par) ? '-' : '+';
+  return `${prefix}${Math.abs(score - par)}`
+}
+
+const getPrettyDate = (date) => {
+  return `${date.getDate()} ${shortMonths[date.getMonth()]} ${date.getFullYear()}`
+};
+
 export default MatchCard;
+export {
+  getMatchScore,
+  getPrettyDate,
+  getPrettyScore
+};

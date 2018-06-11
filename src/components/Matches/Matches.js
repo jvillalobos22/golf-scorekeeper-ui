@@ -4,13 +4,6 @@ import MatchCard from '../MatchCard/MatchCard';
 import './Matches.css';
 
 class Matches extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-
-    }
-  }
-
   render() {
     const { matches } = this.props;
     return(
