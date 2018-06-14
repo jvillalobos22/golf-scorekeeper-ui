@@ -20,13 +20,16 @@
   position: relative;
 }
 
-.score {
-  position: relative;
-  padding: 0.5rem;
-  padding-left: 0;
-  font-size: 1.325rem;
-  color: #799F0C;
+.match_results {
+  .score {
+    position: relative;
+    padding: 0.5rem;
+    padding-left: 0;
+    font-size: 1.325rem;
+    color: #799f0c;
+  }
 }
+
 .course_info h1 {
   margin-bottom: 0;
 }

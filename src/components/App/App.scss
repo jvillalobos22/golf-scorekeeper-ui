@@ -6,7 +6,8 @@
   padding: 1.325rem 1.125rem;
 }
 
-.flex_container, .pg_width.flex_container {
+.flex_container,
+.pg_width.flex_container {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -16,4 +17,16 @@
 .flex_card {
   width: 32%;
   box-sizing: border-box;
+}
+
+@media screen and (max-width: 1440px) {
+  .flex_card {
+    width: 49%;
+  }
+}
+
+@media screen and (max-width: 699px) {
+  .flex_card {
+    width: 100%;
+  }
 }

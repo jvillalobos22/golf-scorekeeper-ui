@@ -1,28 +1,31 @@
-import React from 'react';
-import ErrorMessage from '../ErrorMessage/ErrorMessage';
-import ShowMatchDetails from '../ShowMatchDetails/ShowMatchDetails';
+import React from "react";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
+import ShowMatchDetails from "../ShowMatchDetails/ShowMatchDetails";
 
-import './MatchDetail.css';
+import "./MatchDetail.css";
 
-const MatchDetail = ({matches, matchId}) => {
+const MatchDetail = ({ matches, matchId }) => {
   const getThisMatch = (matches, matchId) => {
-    return matches.find((match) => match.id === matchId)
-  }
-  
+    return matches.find(match => match._id === matchId);
+  };
+
   const thisMatchResult = getThisMatch(matches, matchId);
 
   return (
     <div>
-      {thisMatchResult
-        ? <div>
+      {thisMatchResult ? (
+        <div className="pg_width">
           <ShowMatchDetails match={thisMatchResult} />
         </div>
-        : <div>
-          <ErrorMessage errorMsg={`A match with the id ${matchId} was not found.`} />
+      ) : (
+        <div className="pg_width">
+          <ErrorMessage
+            errorMsg={`A match with the id ${matchId} was not found.`}
+          />
         </div>
-      }
+      )}
     </div>
-  )
-}
+  );
+};
 
 export default MatchDetail;
