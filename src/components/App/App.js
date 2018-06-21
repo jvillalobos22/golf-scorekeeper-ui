@@ -1,32 +1,19 @@
-import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Header from "../Header/Header";
-import Matches from "../Matches/Matches";
-import MatchDetail from "../MatchDetail/MatchDetail";
-import "./App.css";
+import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
+
+import Header from '../Header/Header';
+import Matches from '../Matches/Matches';
+import MatchDetail from '../MatchDetail/MatchDetail';
+import { doFetchMatches } from '../../redux/actions/match';
+import './App.css';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      matches: []
-    };
-  }
-
   componentDidMount() {
-    fetch("http://localhost:8080/matches")
-      .then(res => res.json())
-      .then(data => {
-        console.log(data.matches);
-        this.setState({
-          matches: data.matches
-        });
-      })
-      .catch(e => {});
+    this.props.onFetchMatches('/matches');
   }
 
   render() {
-    const { matches } = this.state;
     return (
       <Router>
         <div className="app">
@@ -36,7 +23,7 @@ class App extends Component {
               exact
               path="/"
               render={() => {
-                return <Matches matches={matches} />;
+                return <Matches />;
               }}
             />
             <Route
@@ -44,7 +31,7 @@ class App extends Component {
               render={({ match }) => {
                 return (
                   <MatchDetail
-                    matches={matches}
+                    // matches={matches}
                     matchId={match.params.matchId}
                   />
                 );
@@ -57,4 +44,11 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapDispatchToProps = dispatch => ({
+  onFetchMatches: query => dispatch(doFetchMatches(query))
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(App);

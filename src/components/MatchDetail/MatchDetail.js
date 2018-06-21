@@ -1,31 +1,46 @@
-import React from "react";
-import ErrorMessage from "../ErrorMessage/ErrorMessage";
-import ShowMatchDetails from "../ShowMatchDetails/ShowMatchDetails";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { matchesSelector } from '../../redux/selectors/match';
+import { doSetMatchId } from '../../redux/actions/match';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
+import ShowMatchDetails from '../ShowMatchDetails/ShowMatchDetails';
 
-import "./MatchDetail.css";
+import './MatchDetail.css';
 
-const MatchDetail = ({ matches, matchId }) => {
-  const getThisMatch = (matches, matchId) => {
+class MatchDetail extends Component {
+  getThisMatch = (matches, matchId) => {
     return matches.find(match => match._id === matchId);
   };
 
-  const thisMatchResult = getThisMatch(matches, matchId);
+  render() {
+    const { matches, matchId } = this.props;
+    const thisMatchResult = this.getThisMatch(matches, matchId);
 
-  return (
-    <div>
-      {thisMatchResult ? (
-        <div className="pg_width">
-          <ShowMatchDetails match={thisMatchResult} />
-        </div>
-      ) : (
-        <div className="pg_width">
-          <ErrorMessage
-            errorMsg={`A match with the id ${matchId} was not found.`}
-          />
-        </div>
-      )}
-    </div>
-  );
+    return (
+      <div>
+        {thisMatchResult ? (
+          <div className="pg_width">
+            <ShowMatchDetails match={thisMatchResult} />
+          </div>
+        ) : (
+          <div className="pg_width">
+            <ErrorMessage
+              errorMsg={`A match with the id ${matchId} was not found.`}
+            />
+          </div>
+        )}
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    matches: matchesSelector(state)
+  };
 };
 
-export default MatchDetail;
+export default connect(
+  mapStateToProps,
+  null
+)(MatchDetail);

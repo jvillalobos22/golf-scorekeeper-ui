@@ -1,11 +1,14 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-import MatchCard from "../MatchCard/MatchCard";
-import "./Matches.css";
+import { matchesSelector } from '../../redux/selectors/match';
+import MatchCard from '../MatchCard/MatchCard';
+import './Matches.css';
 
 class Matches extends Component {
   render() {
     const { matches } = this.props;
+    if (!matches || matches.length < 1) return null;
     return (
       <div className="pg_width">
         <div className="matches_list flex_container">
@@ -18,4 +21,10 @@ class Matches extends Component {
   }
 }
 
-export default Matches;
+const mapStateToProps = state => {
+  return {
+    matches: matchesSelector(state)
+  };
+};
+
+export default connect(mapStateToProps)(Matches);
