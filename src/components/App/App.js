@@ -5,42 +5,15 @@ import { connect } from 'react-redux';
 import Header from '../Header/Header';
 import Matches from '../Matches/Matches';
 import MatchDetail from '../MatchDetail/MatchDetail';
-// import {
-//   getMatches,
-//   selectMatch,
-//   createMatch,
-//   updateMatch,
-//   addCourseToMatch,
-//   addHoleToMatch,
-//   updateHole
-// } from '../../redux/actions/match';
-// import { matches, match, holes } from '../../redux/selectors/selectors';
 import { doFetchMatches } from '../../redux/actions/match';
 import './App.css';
 
 class App extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     matches: []
-  //   };
-  // }
-
   componentDidMount() {
-    // fetch('http://localhost:8080/matches')
-    //   .then(res => res.json())
-    //   .then(data => {
-    //     console.log(data.matches);
-    //     this.setState({
-    //       matches: data.matches
-    //     });
-    //   })
-    //   .catch(e => {});
     this.props.onFetchMatches('/matches');
   }
 
   render() {
-    const { matches } = this.props;
     return (
       <Router>
         <div className="app">
@@ -58,7 +31,7 @@ class App extends Component {
               render={({ match }) => {
                 return (
                   <MatchDetail
-                    matches={matches}
+                    // matches={matches}
                     matchId={match.params.matchId}
                   />
                 );
@@ -71,18 +44,11 @@ class App extends Component {
   }
 }
 
-const stateToProps = state => {
-  return {
-    // matches: matches(state),
-    // selectedMatch: match(state)
-  };
-};
-
 const mapDispatchToProps = dispatch => ({
   onFetchMatches: query => dispatch(doFetchMatches(query))
 });
 
 export default connect(
-  stateToProps,
+  null,
   mapDispatchToProps
 )(App);

@@ -1,6 +1,6 @@
-export const SELECT_MATCH = 'SELECT_MATCH';
 export const CREATE_MATCH = 'CREATE_MATCH';
 export const SELECT_HOLE = 'SELECT_HOLE';
+export const SET_MATCH_ID = 'SET_MATCH_ID';
 export const ADD_HOLE_TO_MATCH = 'ADD_HOLE_TO_MATCH';
 export const ADD_COURSE_TO_MATCH = 'ADD_COURSE_TO_MATCH';
 export const UPDATE_HOLE = 'SELECT_MATCH';

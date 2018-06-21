@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { doFetchMatches } from '../../redux/actions/match';
-import { matchSelector } from '../../redux/selectors/match';
+import { matchesSelector } from '../../redux/selectors/match';
 import MatchCard from '../MatchCard/MatchCard';
 import './Matches.css';
 
@@ -24,7 +23,7 @@ class Matches extends Component {
 
 const mapStateToProps = state => {
   return {
-    matches: matchSelector(state)
+    matches: matchesSelector(state)
   };
 };
 

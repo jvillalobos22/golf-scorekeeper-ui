@@ -1,16 +1,21 @@
 import orm from '../models/index';
 import { CREATE_MATCH } from '../actions/actionTypes';
 import { MATCHES_ADD } from '../actions/actionTypes';
-import { MATCHES_FETCH } from '../actions/actionTypes';
 
-const separateMatchFromHoles = (match, Hole) => {
-  const holes = { match };
-  const holesIds = holes.map(hole => {
-    const newHole = Hole.create(hole);
-    return newHole.id;
+const applyMatchesAdd = (action, Hole, Match) => {
+  action.matches.map(match => {
+    const holeIds = match.holes.map(hole => {
+      let createHole = Object.assign({}, hole);
+      createHole.id = createHole._id;
+      delete createHole._id;
+      let newHole = Hole.create(createHole);
+      return newHole.id;
+    });
+    const newMatch = Object.assign({}, match, { holes: holeIds });
+    return Match.create(newMatch);
   });
-  return;
 };
+
 const ormReducer = (dbState, action) => {
   const sess = orm.session(dbState);
 
@@ -21,20 +26,7 @@ const ormReducer = (dbState, action) => {
       Match.create(action.match);
       break;
     case MATCHES_ADD:
-      console.log('Inside MATCHES_ADD');
-      console.log(action.matches);
-      action.matches.map(match => {
-        const holeIds = match.holes.map(hole => {
-          let createHole = Object.assign({}, hole);
-          createHole.id = createHole._id;
-          delete createHole._id;
-          let newHole = Hole.create(createHole);
-          console.log(newHole.id);
-          return newHole.id;
-        });
-        const newMatch = Object.assign({}, match, { holes: holeIds });
-        Match.create(newMatch);
-      });
+      applyMatchesAdd(action, Hole, Match);
       break;
     // case ADD_COURSE_TO_MATCH:
     //   break;
@@ -44,6 +36,8 @@ const ormReducer = (dbState, action) => {
     //   break;
     // case UPDATE_MATCH:
     //   break;
+    default:
+      break;
   }
 
   return sess.state;

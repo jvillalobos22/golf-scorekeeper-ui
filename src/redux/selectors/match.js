@@ -3,7 +3,7 @@ import orm from '../models/index';
 
 const dbStateSelector = state => state.orm;
 
-const matchSelector = createSelector(orm, dbStateSelector, session => {
+const matchesSelector = createSelector(orm, dbStateSelector, session => {
   return session.Match.all()
     .toModelArray()
     .map(match => {
@@ -14,4 +14,4 @@ const matchSelector = createSelector(orm, dbStateSelector, session => {
     });
 });
 
-export { matchSelector };
+export { matchesSelector };

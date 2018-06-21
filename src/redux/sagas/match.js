@@ -7,7 +7,6 @@ function* handleFetchMatches(action) {
 
   try {
     const result = yield call(fetchMatches, query);
-    console.log(result);
     yield put(doAddMatches(result.matches));
   } catch (error) {
     yield put(doFetchMatchesError(error));
