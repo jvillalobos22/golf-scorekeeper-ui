@@ -1,0 +1,11 @@
+export const SELECT_MATCH = 'SELECT_MATCH';
+export const CREATE_MATCH = 'CREATE_MATCH';
+export const SELECT_HOLE = 'SELECT_HOLE';
+export const ADD_HOLE_TO_MATCH = 'ADD_HOLE_TO_MATCH';
+export const ADD_COURSE_TO_MATCH = 'ADD_COURSE_TO_MATCH';
+export const UPDATE_HOLE = 'SELECT_MATCH';
+export const UPDATE_MATCH = 'UPDATE_MATCH';
+export const GET_MATCHES = 'GET_MATCHES';
+export const MATCHES_ADD = 'MATCHES_ADD';
+export const MATCHES_FETCH = 'MATCHES_FETCH';
+export const MATCHES_FETCH_ERROR = 'MATCHES_FETCH_ERROR';
