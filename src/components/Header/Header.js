@@ -1,10 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Header.css';
 
-const Header = () => (  
+const Header = () => (
   <header className="app_header">
     <div className="pg_width">
-      <h1 className="app_title">Juan's Caddy</h1>
+      <Link to="/">
+        <h1 className="app_title">Juan's Caddy</h1>
+      </Link>
     </div>
   </header>
 );
