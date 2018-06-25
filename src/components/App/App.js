@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
+import 'react-select/dist/react-select.css';
 
 import Header from '../Header/Header';
 import Matches from '../Matches/Matches';
