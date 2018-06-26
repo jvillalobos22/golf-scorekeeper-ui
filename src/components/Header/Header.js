@@ -6,7 +6,7 @@ const Header = () => (
   <header className="app_header">
     <div className="pg_width">
       <Link to="/">
-        <h1 className="app_title">Juan's Caddy</h1>
+        <h2 className="app_title">Juan's Caddy</h2>
       </Link>
     </div>
   </header>

@@ -1,3 +1,5 @@
+$primary_color: #799f0c;
+
 .pg_width {
   width: 100%;
   max-width: 1400px;
@@ -17,6 +19,22 @@
 .flex_card {
   width: 32%;
   box-sizing: border-box;
+}
+
+h1 {
+  font-size: 2.125rem;
+  font-weight: 300;
+  color: $primary_color;
+  position: relative;
+  &:after {
+    content: '';
+    height: 5px;
+    width: 80px;
+    background-color: $primary_color;
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+  }
 }
 
 @media screen and (max-width: 1440px) {
