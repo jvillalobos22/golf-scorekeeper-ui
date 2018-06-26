@@ -118,11 +118,4 @@ import {
 //   };
 // };
 
-export // getMatches,
-// selectMatch,
-// createMatch,
-// updateMatch,
-// addCourseToMatch,
-// addHoleToMatch,
-// updateHole
-{};
+export {};

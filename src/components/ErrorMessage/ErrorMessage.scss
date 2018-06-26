@@ -1,0 +1,11 @@
+$dark_red: #d50000;
+$light_red: #ffebee;
+
+.error_message {
+  color: $dark_red;
+  border: 1px solid $dark_red;
+  background-color: $light_red;
+  border-left: 5px solid $dark_red;
+  font-size: 0.875rem;
+  padding: 0.25rem 0.75rem;
+}
