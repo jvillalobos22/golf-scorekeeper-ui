@@ -10,6 +10,24 @@
   justify-content: flex-start;
   border-bottom: 1px solid #e6e6e6;
   padding: 0.75rem 0.5rem;
+
+  a.hole_link {
+    position: relative;
+    padding: 0 2rem;
+    text-decoration: none;
+
+    svg {
+      display: none;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    &:hover {
+      svg {
+        display: block;
+      }
+    }
+  }
 }
 
 .scorecard_row .ten {

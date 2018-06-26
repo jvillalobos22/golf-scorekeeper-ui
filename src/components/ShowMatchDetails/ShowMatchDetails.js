@@ -1,18 +1,21 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   getMatchScore,
   getPrettyDate,
   getPrettyScore
-} from "../MatchCard/MatchCard";
-import Button from "../Button/Button";
-import "./ShowMatchDetails.css";
+} from '../MatchCard/MatchCard';
+import Button from '../Button/Button';
+import './ShowMatchDetails.css';
 
 const ShowMatchDetails = ({ match }) => {
   return (
     <div>
       <Link to="/">
-        <Button>Back</Button>
+        <Button>
+          <FontAwesomeIcon icon="caret-left" size="lg" />&nbsp;Back
+        </Button>
       </Link>
       <div className="course_info">
         <h1>{match.course.name}</h1>
@@ -38,7 +41,20 @@ const ShowMatchDetails = ({ match }) => {
         {match.holes.map(hole => {
           return (
             <div key={hole.id} className="scorecard_row">
-              <span className="ten">{hole.holeNumber}</span>
+              <span className="ten">
+                <Link
+                  className="hole_link"
+                  to={`/play/${match._id}/hole/${hole.holeNumber}`}
+                >
+                  <FontAwesomeIcon
+                    className="hole_edit"
+                    icon="pencil-alt"
+                    size="sm"
+                  />
+                  {hole.holeNumber}
+                </Link>
+              </span>
+
               <span className="ten">{hole.par}</span>
               <span className="ten">
                 {hole.score} ({getPrettyScore([hole], hole.par)})
