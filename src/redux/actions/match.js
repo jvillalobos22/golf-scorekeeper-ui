@@ -2,6 +2,7 @@ import {
   CREATE_MATCH_SUBMIT,
   CREATE_MATCH_SUCCESS,
   CREATE_MATCH_ERROR,
+  CREATE_MATCH_CLEAR,
   MATCHES_ADD,
   MATCHES_FETCH,
   MATCHES_FETCH_ERROR
@@ -37,11 +38,16 @@ const doMatchCreateError = error => ({
   error
 });
 
+const doMatchCreateClear = () => ({
+  type: CREATE_MATCH_CLEAR
+});
+
 export {
   doAddMatches,
   doFetchMatches,
   doFetchMatchesError,
   doMatchCreate,
   doMatchCreateSuccess,
-  doMatchCreateError
+  doMatchCreateError,
+  doMatchCreateClear
 };

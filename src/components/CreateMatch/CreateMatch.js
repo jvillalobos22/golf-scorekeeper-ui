@@ -4,7 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import Select from 'react-select';
 import { connect } from 'react-redux';
 
-import { doMatchCreate } from '../../redux/actions/match';
+import { doMatchCreate, doMatchCreateClear } from '../../redux/actions/match';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import { GhostButton } from '../Button/Button';
 import './CreateMatch.css';
@@ -21,6 +21,11 @@ class CreateMatch extends Component {
       },
       date: new Date()
     };
+  }
+
+  componentWillUnmount() {
+    console.log('Component Unmounting');
+    this.props.onMatchCreateClear();
   }
 
   setCourseName = newName => {
@@ -166,7 +171,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  onMatchCreate: query => dispatch(doMatchCreate(query))
+  onMatchCreate: query => dispatch(doMatchCreate(query)),
+  onMatchCreateClear: () => dispatch(doMatchCreateClear())
 });
 
 export default connect(

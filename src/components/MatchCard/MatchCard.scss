@@ -14,14 +14,15 @@ h3 {
   margin: 0;
 }
 
-.course_location, .course_par {
+.course_location,
+.course_par {
   font-size: 1rem;
   font-weight: 300;
   display: block;
 }
 
 .match_date {
-  position: absolute;  
+  position: absolute;
   top: 0;
   right: 0;
   padding: 0.5rem;
@@ -42,7 +43,7 @@ h3 {
   right: 0;
   padding: 0.5rem;
   font-size: 1.325rem;
-  color: #799F0C;
+  color: #799f0c;
 }
 
 .score span {

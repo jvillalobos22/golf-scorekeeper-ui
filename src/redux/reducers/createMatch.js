@@ -1,6 +1,7 @@
 import {
   CREATE_MATCH_SUCCESS,
-  CREATE_MATCH_ERROR
+  CREATE_MATCH_ERROR,
+  CREATE_MATCH_CLEAR
 } from '../actions/actionTypes';
 
 const INITIAL_STATE = {
@@ -23,6 +24,9 @@ const createMatchReducer = (state = INITIAL_STATE, action) => {
         createMatchError: true,
         createMatchSuccess: false
       };
+    }
+    case CREATE_MATCH_CLEAR: {
+      return INITIAL_STATE;
     }
     default:
       return state;

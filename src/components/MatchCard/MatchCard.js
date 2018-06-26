@@ -1,8 +1,8 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import Button from "../Button/Button";
-import "./MatchCard.css";
-import { shortMonths } from "../../helpers/months";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import Button from '../Button/Button';
+import './MatchCard.css';
+import { shortMonths } from '../../helpers/months';
 
 const MatchCard = ({ match, className }) => {
   return (
@@ -29,15 +29,21 @@ const MatchCard = ({ match, className }) => {
 };
 
 const getMatchScore = holes => {
+  let incomplete = false;
   const score = holes.reduce((total, hole) => {
+    if (hole.score === 0) incomplete = true;
     return total + hole.score;
   }, 0);
+  if (incomplete) {
+    // return false;
+  }
   return score;
 };
 
 const getPrettyScore = (holes, par) => {
   const score = getMatchScore(holes);
-  const prefix = score < par ? "-" : "+";
+  if (!score) return 'DNF';
+  const prefix = score < par ? '-' : '+';
   return `${prefix}${Math.abs(score - par)}`;
 };
 
