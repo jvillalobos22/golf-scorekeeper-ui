@@ -7,6 +7,7 @@ import Header from '../Header/Header';
 import Matches from '../Matches/Matches';
 import MatchDetail from '../MatchDetail/MatchDetail';
 import CreateMatch from '../CreateMatch/CreateMatch';
+import PlayMatch from '../PlayMatch/PlayMatch';
 import { doFetchMatches } from '../../redux/actions/match';
 import './App.css';
 
@@ -29,6 +30,17 @@ class App extends Component {
               }}
             />
             <Route path="/new-match" component={CreateMatch} />
+            <Route
+              path="/play/:matchId/hole/:holeNumber"
+              render={({ match }) => {
+                return (
+                  <PlayMatch
+                    matchId={match.params.matchId}
+                    holeNumber={match.params.holeNumber}
+                  />
+                );
+              }}
+            />
           </Switch>
         </div>
       </Router>

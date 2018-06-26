@@ -78,7 +78,7 @@ class CreateMatch extends Component {
         {postSuccess && createdMatchId ? (
           <div className="post_success_message">
             <h3>Let's Golf!</h3>
-            <Redirect to={`/matches/${createdMatchId}`} />
+            <Redirect to={`/play/${createdMatchId}/hole/1`} />
           </div>
         ) : (
           <form
