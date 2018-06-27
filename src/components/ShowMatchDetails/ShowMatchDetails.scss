@@ -43,17 +43,21 @@
     position: relative;
     padding: 0.5rem;
     padding-left: 0;
+    margin-bottom: 0.75rem;
+    display: block;
     font-size: 1.325rem;
     color: #799f0c;
   }
 }
 
 .course_info h1 {
-  margin-bottom: 1rem;
+  margin-top: 1.25rem;
+  margin-bottom: 1.75rem;
 }
 
-.course_info span {
+.course_info span,
+.match_details_date span {
   display: block;
   font-weight: 300;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.5rem;
 }

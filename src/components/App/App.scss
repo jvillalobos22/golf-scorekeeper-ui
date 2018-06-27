@@ -24,8 +24,11 @@ $primary_color: #799f0c;
 h1 {
   font-size: 2.125rem;
   font-weight: 300;
+  margin-top: 0.75rem;
+  margin-bottom: 1.75rem;
   color: $primary_color;
   position: relative;
+
   &:after {
     content: '';
     height: 5px;
@@ -35,6 +38,18 @@ h1 {
     bottom: -10px;
     left: 0;
   }
+}
+
+label {
+  font-weight: 300;
+  margin-bottom: 0.5rem;
+  font-size: 0.925rem;
+}
+
+input {
+  padding: 0.5rem;
+  font-size: 1rem;
+  margin-bottom: 1rem;
 }
 
 @media screen and (max-width: 1440px) {

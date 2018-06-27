@@ -13,15 +13,49 @@ class PlayMatch extends Component {
     this.state = {
       scores: []
     };
+
+    this.updateScore = this.updateScore.bind(this);
   }
 
   componentDidMount() {
     console.log('Mounting');
+    const { matches, matchId } = this.props;
+    const thisMatch = this.getThisMatch(matches, matchId);
+    if (thisMatch) {
+      this.setState({
+        scores: thisMatch.holes
+      });
+    }
   }
 
   getThisMatch = (matches, matchId) => {
     return matches.find(match => match._id === matchId);
   };
+
+  updateScore = newHole => {
+    const newScores = this.state.scores.map(hole => {
+      console.log(hole.id);
+      console.log(newHole);
+      if (hole.id === newHole.id) {
+        return newHole;
+      }
+      return hole;
+    });
+    this.setState({
+      scores: newScores
+    });
+  };
+
+  componentDidUpdate(prevProps) {
+    console.log('receiving new props');
+    const oldMatch = this.getThisMatch(prevProps.matches, prevProps.matchId);
+    const newMatch = this.getThisMatch(this.props.matches, this.props.matchId);
+    if (!oldMatch || oldMatch.course.holes !== newMatch.course.holes) {
+      this.setState({
+        scores: newMatch.holes
+      });
+    }
+  }
 
   render() {
     const { matches, matchId, holeNumber } = this.props;
@@ -33,7 +67,8 @@ class PlayMatch extends Component {
             <PlayHole
               holeNumber={holeNumber}
               match={thisMatch}
-              holeScore={this.state.scores[holeNumber]}
+              holeScore={this.state.scores[holeNumber - 1]}
+              updateScore={newHole => this.updateScore(newHole)}
             />
           ) : (
             <ErrorMessage

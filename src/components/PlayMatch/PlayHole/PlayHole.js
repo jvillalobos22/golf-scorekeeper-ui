@@ -7,30 +7,22 @@ import Button, { GhostButton } from '../../Button/Button';
 import './PlayHole.css';
 
 class PlayHole extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      par: 4,
-      score: 0
-    };
-  }
-
   setPar = newPar => {
-    this.setState({
-      par: newPar
-    });
+    const newHole = { ...this.props.holeScore };
+    newHole.par = newPar;
+    this.props.updateScore(newHole);
   };
 
   scoreUpdate = newScore => {
-    this.setState({
-      score: newScore.value
-    });
+    const newHole = { ...this.props.holeScore };
+    newHole.score = newScore ? newScore.value : 0;
+    this.props.updateScore(newHole);
   };
 
   render() {
-    const { holeNumber, match } = this.props;
-    return (
-      <div>
+    const { holeNumber, match, holeScore } = this.props;
+    return holeScore ? (
+      <div className="play_hole">
         <PlayHoleHeader
           holeNumber={holeNumber}
           matchId={match._id}
@@ -40,34 +32,16 @@ class PlayHole extends Component {
         <h1>Hole {holeNumber}</h1>
         <form onSubmit={e => e.preventDefault()}>
           <label>Par</label>
-          <div className="par_buttons">
-            <button
-              type="button"
-              className={this.state.par === 3 && 'selected'}
-              onClick={() => this.setPar(3)}
-            >
-              3
-            </button>
-            <button
-              type="button"
-              className={this.state.par === 4 && 'selected'}
-              onClick={() => this.setPar(4)}
-            >
-              4
-            </button>
-            <button
-              type="button"
-              className={this.state.par === 5 && 'selected'}
-              onClick={() => this.setPar(5)}
-            >
-              5
-            </button>
-          </div>
+          <ParSelect
+            setPar={par => this.setPar(par)}
+            value={holeScore.par}
+            className="some-class"
+          />
           <div className="input_field">
             <label>Score</label>
             <Select
               name="score"
-              value={this.state.score}
+              value={holeScore.score}
               clearable={true}
               required
               onChange={this.scoreUpdate}
@@ -90,9 +64,37 @@ class PlayHole extends Component {
           </div>
         </form>
       </div>
+    ) : (
+      <div />
     );
   }
 }
+
+const ParSelect = ({ setPar, className, value }) => (
+  <div className={className ? `par_buttons ${className}` : 'par_buttons'}>
+    <button
+      type="button"
+      className={value === 3 ? 'selected' : ''}
+      onClick={() => setPar(3)}
+    >
+      3
+    </button>
+    <button
+      type="button"
+      className={value === 4 ? 'selected' : ''}
+      onClick={() => setPar(4)}
+    >
+      4
+    </button>
+    <button
+      type="button"
+      className={value === 5 ? 'selected' : ''}
+      onClick={() => setPar(5)}
+    >
+      5
+    </button>
+  </div>
+);
 
 const PlayHoleHeader = ({ holeNumber, matchId, totalHoles, completeMatch }) => (
   <div className="play_hole_btns">

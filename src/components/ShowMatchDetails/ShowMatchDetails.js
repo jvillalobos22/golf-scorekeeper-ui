@@ -23,6 +23,9 @@ const ShowMatchDetails = ({ match }) => {
         <span>Par: {match.course.par}</span>
         <span>{match.course.holes} Holes</span>
       </div>
+      <div className="match_details_date">
+        <span>{getPrettyDate(match.date)}</span>
+      </div>
       <div className="match_results">
         <span className="score">
           {getMatchScore(match.holes)} ({getPrettyScore(
@@ -31,7 +34,6 @@ const ShowMatchDetails = ({ match }) => {
           )})
         </span>
       </div>
-      <span>{getPrettyDate(match.date)}</span>
       <div className="match_scorecard">
         <div className="scorecard_row">
           <span className="ten">Hole</span>
