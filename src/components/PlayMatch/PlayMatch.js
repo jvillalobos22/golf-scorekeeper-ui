@@ -30,7 +30,11 @@ class PlayMatch extends Component {
       <div>
         <div className="pg_width">
           {thisMatch ? (
-            <PlayHole holeNumber={holeNumber} match={thisMatch} />
+            <PlayHole
+              holeNumber={holeNumber}
+              match={thisMatch}
+              holeScore={this.state.scores[holeNumber]}
+            />
           ) : (
             <ErrorMessage
               errorMsg={`A match with the id ${matchId} was not found.`}

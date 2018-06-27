@@ -1,5 +1,13 @@
+$secondary_color: #acbb78;
+
 .play_hole_btns {
   width: 100%;
   display: flex;
   justify-content: space-between;
+}
+
+.par_buttons {
+  button.selected {
+    background-color: $secondary_color;
+  }
 }
