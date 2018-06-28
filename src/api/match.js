@@ -4,8 +4,6 @@ const fetchMatches = query =>
   fetch(GS_API_BASE_URL + query).then(res => res.json());
 
 const postMatch = match => {
-  // Build Payload
-  console.log('postMatch: ', match);
   const emptyHoles = [];
   for (let i = 1; i <= match.holesSelect; i++) {
     emptyHoles.push({
@@ -14,7 +12,6 @@ const postMatch = match => {
       score: 0
     });
   }
-  console.log(match);
   let newMatch = {
     course: {
       name: match.course.name,
@@ -25,7 +22,6 @@ const postMatch = match => {
     holes: emptyHoles,
     date: match.date
   };
-  console.log('newMatch', newMatch);
 
   return fetch(GS_API_BASE_URL + '/matches', {
     method: 'POST',
@@ -34,9 +30,31 @@ const postMatch = match => {
       'Content-Type': 'application/json'
     }
   }).then(res => {
-    console.log('res', res);
     return res.json();
   });
 };
 
-export { fetchMatches, postMatch };
+const patchScoreUpdate = ({ matchId, newScores }) => {
+  const formattedScores = newScores.map(hole => {
+    return {
+      _id: hole.id,
+      holeNumber: hole.holeNumber,
+      par: hole.par,
+      score: hole.score
+    };
+  });
+
+  return fetch(GS_API_BASE_URL + `/matches/${matchId}`, {
+    method: 'PATCH',
+    body: JSON.stringify({
+      holes: formattedScores
+    }),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }).then(res => {
+    return res.json();
+  });
+};
+
+export { fetchMatches, postMatch, patchScoreUpdate };

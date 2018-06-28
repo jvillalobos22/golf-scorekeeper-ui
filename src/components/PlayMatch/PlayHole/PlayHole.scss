@@ -1,3 +1,4 @@
+$primary_color: #799f0c;
 $secondary_color: #acbb78;
 $gray: #e3e3e3;
 
@@ -5,6 +6,14 @@ $gray: #e3e3e3;
   width: 100%;
   display: flex;
   justify-content: space-between;
+
+  button {
+    &:hover,
+    &:focus,
+    &:active {
+      outline: 0;
+    }
+  }
 }
 
 .par_buttons {
@@ -49,5 +58,31 @@ $gray: #e3e3e3;
 
   .Select-control {
     border-radius: 0;
+  }
+}
+
+.hole_heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  margin-top: 1rem;
+  border-bottom: 3px solid $primary_color;
+
+  h1 {
+    margin-bottom: 0;
+    margin-top: 0;
+    margin-right: 0.5rem;
+    &:after {
+      content: none;
+    }
+  }
+  .see_match_scorecard {
+    color: #222;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: 0.875rem;
+    border: 1px solid #222;
+    padding: 0.5rem 0.75rem;
   }
 }

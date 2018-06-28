@@ -1,5 +1,5 @@
 import { Model, many, fk, attr, ORM } from 'redux-orm';
-import { ADD_HOLE_TO_MATCH, UPDATE_HOLE } from '../actions/actionTypes';
+import { ADD_HOLE_TO_MATCH } from '../actions/actionTypes';
 
 class Match extends Model {
   static get fields() {
@@ -37,8 +37,6 @@ class Hole extends Model {
     switch (type) {
       case ADD_HOLE_TO_MATCH:
         Hole.create(payload);
-        break;
-      case UPDATE_HOLE:
         break;
       default:
         return state;

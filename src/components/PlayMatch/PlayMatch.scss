@@ -1,0 +1,58 @@
+$dark_red: #d50000;
+$dark_green: #33691e;
+
+.play_match {
+  .notification {
+    margin-bottom: 1rem;
+  }
+  .connection_error,
+  .update_success {
+    margin-bottom: 1rem;
+    position: relative;
+
+    .error_message,
+    .notification {
+      padding-bottom: 1.375rem;
+    }
+    button {
+      position: absolute;
+      border: 0;
+      background: 0;
+      bottom: 0.25rem;
+      right: 0.25rem;
+      padding: 0;
+      text-transform: uppercase;
+      font-size: 1rem;
+
+      &:hover,
+      &:active,
+      &:focus {
+        cursor: pointer;
+        outline: 0;
+      }
+    }
+  }
+
+  .connection_error {
+    button {
+      color: $dark_red;
+      &:hover,
+      &:active,
+      &:focus {
+        cursor: pointer;
+        color: darken($dark_red, 15%);
+      }
+    }
+  }
+  .update_success {
+    button {
+      color: $dark_green;
+      &:hover,
+      &:active,
+      &:focus {
+        cursor: pointer;
+        color: darken($dark_green, 15%);
+      }
+    }
+  }
+}

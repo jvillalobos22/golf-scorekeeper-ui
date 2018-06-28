@@ -1,0 +1,26 @@
+.notification {
+  width: 100%;
+  max-width: 700px;
+  text-align: center;
+  display: block;
+  margin: 0 auto;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #e3e3e3;
+  font-weight: 300;
+
+  strong {
+    font-weight: bold;
+  }
+
+  &.warning {
+    border: 1px solid #ffd600;
+    background-color: #fffde7;
+    color: #ff9100;
+  }
+
+  &.success {
+    border: 1px solid #33691e;
+    background-color: #f1f8e9;
+    color: #33691e;
+  }
+}

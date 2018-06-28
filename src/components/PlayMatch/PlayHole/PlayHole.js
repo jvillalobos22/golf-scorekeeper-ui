@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Select from 'react-select';
+import { doSyncUpdate } from '../../../redux/actions/playMatch';
 
 import Button, { GhostButton } from '../../Button/Button';
 import './PlayHole.css';
@@ -19,6 +21,14 @@ class PlayHole extends Component {
     this.props.updateScore(newHole);
   };
 
+  handleFormSubmit = e => {
+    const { storeInSync, match } = this.props;
+    e.preventDefault();
+    if (!storeInSync) {
+      this.props.onScoreSubmit(match._id);
+    }
+  };
+
   render() {
     const { holeNumber, match, holeScore } = this.props;
     return holeScore ? (
@@ -29,8 +39,13 @@ class PlayHole extends Component {
           totalHoles={match.course.holes}
           completeMatch={() => console.log('Finished Match')}
         />
-        <h1>Hole {holeNumber}</h1>
-        <form onSubmit={e => e.preventDefault()}>
+        <div className="hole_heading">
+          <h1>Hole {holeNumber}</h1>
+          <Link to={`/matches/${match._id}`} className="see_match_scorecard">
+            <span>See Match Scorecard</span>
+          </Link>
+        </div>
+        <form onSubmit={e => this.handleFormSubmit(e)}>
           <label>Par</label>
           <ParSelect
             setPar={par => this.setPar(par)}
@@ -43,7 +58,6 @@ class PlayHole extends Component {
               name="score"
               value={holeScore.score}
               clearable={true}
-              required
               onChange={this.scoreUpdate}
               options={[
                 { value: 1, label: '1 - Hole In One!' },
@@ -63,6 +77,16 @@ class PlayHole extends Component {
             <input className="button" type="submit" value="Save Hole" />
           </div>
         </form>
+        <div>
+          <span className="">
+            <strong>Score: </strong>
+            {match.holes[holeNumber - 1].score}
+          </span>
+          <span className="">
+            <strong>Par: </strong>
+            {match.holes[holeNumber - 1].par}
+          </span>
+        </div>
       </div>
     ) : (
       <div />
@@ -119,4 +143,21 @@ const PlayHoleHeader = ({ holeNumber, matchId, totalHoles, completeMatch }) => (
   </div>
 );
 
-export default PlayHole;
+const mapStateToProps = state => {
+  return {
+    storeInSync: state.playMatchState.storeInSync
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onSyncUpdate: sync => dispatch(doSyncUpdate(sync))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PlayHole);
+
+// export default PlayHole;

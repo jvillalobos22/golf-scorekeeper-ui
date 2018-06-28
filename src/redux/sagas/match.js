@@ -5,7 +5,11 @@ import {
   doMatchCreateSuccess,
   doMatchCreateError
 } from '../actions/match';
-import { fetchMatches, postMatch } from '../../api/match';
+import {
+  doPatchScoreUpdateSuccess,
+  doPatchScoreUpdateError
+} from '../actions/playMatch';
+import { fetchMatches, postMatch, patchScoreUpdate } from '../../api/match';
 
 function* handleFetchMatches(action) {
   const { query } = action;
@@ -32,4 +36,15 @@ function* handleCreateMatch(action) {
   }
 }
 
-export { handleFetchMatches, handleCreateMatch };
+function* handleUpdateMatch(action) {
+  console.log('handleUpdateMatch()');
+  console.log(action);
+  try {
+    const result = yield call(patchScoreUpdate, action.payload);
+    console.log('RESULT: ', result);
+    yield put(doPatchScoreUpdateSuccess(result.match));
+  } catch (error) {
+    yield put(doPatchScoreUpdateError(error));
+  }
+}
+export { handleFetchMatches, handleCreateMatch, handleUpdateMatch };

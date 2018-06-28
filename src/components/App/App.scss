@@ -26,6 +26,7 @@ h1 {
   font-weight: 300;
   margin-top: 0.75rem;
   margin-bottom: 1.75rem;
+  padding-bottom: 10px;
   color: $primary_color;
   position: relative;
 
@@ -35,7 +36,7 @@ h1 {
     width: 80px;
     background-color: $primary_color;
     position: absolute;
-    bottom: -10px;
+    bottom: 0;
     left: 0;
   }
 }

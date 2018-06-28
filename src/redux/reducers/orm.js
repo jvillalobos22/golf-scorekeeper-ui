@@ -2,7 +2,9 @@ import orm from '../models/index';
 import {
   CREATE_MATCH_SUCCESS,
   MATCHES_ADD,
-  CREATE_MATCH_ERROR
+  CREATE_MATCH_ERROR,
+  PATCH_SCORE_UPDATE_SUCCESS,
+  PATCH_SCORE_UPDATE_ERROR
 } from '../actions/actionTypes';
 
 const applyMatchesAdd = (action, Hole, Match) => {
@@ -20,7 +22,6 @@ const applyMatchesAdd = (action, Hole, Match) => {
 };
 
 const applyMatchCreate = (action, Hole, Match) => {
-  console.log(action);
   const holeIds = action.match.holes.map(hole => {
     let createHole = Object.assign({}, hole);
     createHole.id = createHole._id;
@@ -30,6 +31,17 @@ const applyMatchCreate = (action, Hole, Match) => {
   });
   const newMatch = Object.assign({}, action.match, { holes: holeIds });
   return Match.create(newMatch);
+};
+
+const applyScoreUpdate = (action, Hole, Match) => {
+  const { holes } = action.match;
+  return holes.map(hole => {
+    let updateHole = { ...hole };
+    updateHole.id = updateHole._id;
+    delete updateHole._id;
+    let newHole = Hole.withId(hole._id).update(updateHole);
+    return newHole;
+  });
 };
 
 const ormReducer = (dbState, action) => {
@@ -44,12 +56,9 @@ const ormReducer = (dbState, action) => {
     case CREATE_MATCH_SUCCESS:
       applyMatchCreate(action, Hole, Match);
       break;
-    // case ADD_HOLE_TO_MATCH:
-    //   break;
-    // case UPDATE_HOLE:
-    //   break;
-    // case UPDATE_MATCH:
-    //   break;
+    case PATCH_SCORE_UPDATE_SUCCESS:
+      applyScoreUpdate(action, Hole, Match);
+      break;
     default:
       break;
   }

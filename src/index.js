@@ -10,7 +10,9 @@ import {
   faCaretRight,
   faCaretDown,
   faCaretUp,
-  faCheck
+  faCheck,
+  faExclamation,
+  faWindowClose
 } from '@fortawesome/fontawesome-free-solid';
 
 import store from './redux/store';
