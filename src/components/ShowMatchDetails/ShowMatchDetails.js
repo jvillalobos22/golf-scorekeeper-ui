@@ -42,26 +42,26 @@ const ShowMatchDetails = ({ match }) => {
         </div>
         {match.holes.map(hole => {
           return (
-            <div key={hole.id} className="scorecard_row">
-              <span className="ten">
-                <Link
-                  className="hole_link"
-                  to={`/play/${match._id}/hole/${hole.holeNumber}`}
-                >
+            <Link
+              className="hole_link"
+              to={`/play/${match._id}/hole/${hole.holeNumber}`}
+            >
+              <div key={hole.id} className="scorecard_row">
+                <span className="ten scorecard_holenumber">
                   <FontAwesomeIcon
                     className="hole_edit"
                     icon="pencil-alt"
                     size="sm"
                   />
                   {hole.holeNumber}
-                </Link>
-              </span>
+                </span>
 
-              <span className="ten">{hole.par}</span>
-              <span className="ten">
-                {hole.score} ({getPrettyScore([hole], hole.par)})
-              </span>
-            </div>
+                <span className="ten">{hole.par}</span>
+                <span className="ten">
+                  {hole.score} ({getPrettyScore([hole], hole.par)})
+                </span>
+              </div>
+            </Link>
           );
         })}
       </div>

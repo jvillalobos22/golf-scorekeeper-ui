@@ -1,5 +1,36 @@
+$primary_color: #799f0c;
+$secondary_color: #acbb78;
+
 .match_scorecard {
   width: 100%;
+
+  a.hole_link {
+    position: relative;
+    text-decoration: none;
+    color: #222;
+
+    svg {
+      display: none;
+      position: absolute;
+      left: 18px;
+      top: 34%;
+    }
+    &:hover {
+      color: $primary_color;
+      svg {
+        display: block;
+      }
+      .scorecard_row {
+        border-left: 3px solid $primary_color;
+        background-color: lighten($secondary_color, 36%);
+      }
+    }
+  }
+
+  .scorecard_holenumber {
+    padding-left: 2rem;
+    vertical-align: middle;
+  }
 }
 
 .scorecard_row {
@@ -9,25 +40,8 @@
   align-items: center;
   justify-content: flex-start;
   border-bottom: 1px solid #e6e6e6;
+  border-left: 3px solid transparent;
   padding: 0.75rem 0.5rem;
-
-  a.hole_link {
-    position: relative;
-    padding: 0 2rem;
-    text-decoration: none;
-
-    svg {
-      display: none;
-      position: absolute;
-      left: 0;
-      top: 0;
-    }
-    &:hover {
-      svg {
-        display: block;
-      }
-    }
-  }
 }
 
 .scorecard_row .ten {
