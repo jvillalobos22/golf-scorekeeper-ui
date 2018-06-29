@@ -32,3 +32,21 @@ $primary_color: #799f0c;
     transition: background-color 1.5s ease, border 1s ease, color 0.75s ease;
   }
 }
+
+.button.small_button {
+  padding: 0.25rem 0.875rem;
+  font-size: 0.625rem;
+  box-sizing: border-box;
+}
+
+.button.inline_button {
+  background: 0;
+  color: $primary_color;
+  border: 0;
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: darken($primary_color, 15%);
+  }
+}
