@@ -3,6 +3,7 @@ import {
   CREATE_MATCH_SUCCESS,
   CREATE_MATCH_ERROR,
   CREATE_MATCH_CLEAR,
+  DO_COMPLETE_MATCH,
   MATCHES_ADD,
   MATCHES_FETCH,
   MATCHES_FETCH_ERROR
@@ -42,8 +43,14 @@ const doMatchCreateClear = () => ({
   type: CREATE_MATCH_CLEAR
 });
 
+const doCompleteMatch = id => ({
+  type: DO_COMPLETE_MATCH,
+  id
+});
+
 export {
   doAddMatches,
+  doCompleteMatch,
   doFetchMatches,
   doFetchMatchesError,
   doMatchCreate,

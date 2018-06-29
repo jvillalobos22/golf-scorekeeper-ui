@@ -13,6 +13,10 @@ class Match extends Model {
   static get fields() {
     return {
       _id: attr(),
+      title: attr(),
+      numberHoles: attr(),
+      par: attr(),
+      isComplete,
       course: many('Course', 'matches'),
       date: attr(),
       holes: fk('Hole', 'matches')
