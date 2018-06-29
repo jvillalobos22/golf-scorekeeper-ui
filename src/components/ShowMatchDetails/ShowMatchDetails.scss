@@ -1,5 +1,6 @@
 $primary_color: #799f0c;
 $secondary_color: #acbb78;
+$yellow: #ffd600;
 
 .match_scorecard {
   width: 100%;
@@ -53,14 +54,62 @@ $secondary_color: #acbb78;
 }
 
 .match_results {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+
   .score {
     position: relative;
     padding: 0.5rem;
     padding-left: 0;
     margin-bottom: 0.75rem;
     display: block;
-    font-size: 1.325rem;
-    color: #799f0c;
+
+    .score_header {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #222;
+      text-transform: uppercase;
+    }
+    .current_holes,
+    .match_total,
+    .pretty_score {
+      font-size: 1.325rem;
+      color: #799f0c;
+      display: inline-block;
+      margin-right: 0.5rem;
+    }
+
+    .match_total {
+      padding-left: 1rem;
+      padding-top: 0.25rem;
+    }
+
+    .current_holes {
+      color: #222;
+      font-weight: 300;
+    }
+  }
+
+  .continue_match {
+    .holes_scored {
+      text-align: center;
+      font-weight: 300;
+      margin-bottom: 0.5rem;
+      span {
+        display: block;
+        font-size: 1.375rem;
+
+        &.all {
+          color: $primary_color;
+        }
+        &.some {
+          color: $yellow;
+          font-weight: 500;
+        }
+      }
+    }
   }
 }
 
