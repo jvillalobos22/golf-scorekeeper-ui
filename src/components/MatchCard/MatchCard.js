@@ -7,10 +7,13 @@ import { shortMonths } from '../../helpers/months';
 const MatchCard = ({ match, className }) => {
   return (
     <div className={`match_card ${className}`}>
-      <h3>{match.course.name}</h3>
-      <span className="course_location">{match.course.location}</span>
-      <span className="match_date">{getPrettyDate(match.date)}</span>
-      <span className="course_par">Par: {match.course.par}</span>
+      <h3>{match.title}</h3>
+      <div className="course_info">
+        <span>{match.course.name}</span>
+        <span className="course_location">{match.course.location}</span>
+        <span className="match_date">{getPrettyDate(match.date)}</span>
+        <span className="course_par">Par: {match.par}</span>
+      </div>
       <p className="match_holes_played">
         <span>{match.course.holes}</span> Holes
       </p>
@@ -18,7 +21,7 @@ const MatchCard = ({ match, className }) => {
         <span>Score:</span>
         <strong>{getMatchScore(match.holes)}</strong> ({getPrettyScore(
           match.holes,
-          match.course.par
+          match.par
         )})
       </div>
       <Link to={`/matches/${match._id}`}>
@@ -54,5 +57,26 @@ const getPrettyDate = date => {
   } ${date.getFullYear()}`;
 };
 
+const getFirstIncompleteHoleId = holes => {
+  let firstIncomplete = false;
+  let holesScored = 0;
+  holes.map(hole => {
+    if (!firstIncomplete && hole.score === 0) {
+      firstIncomplete = hole.id;
+    }
+    holesScored = hole.score === 0 ? holesScored : holesScored + 1;
+    return hole;
+  });
+  return {
+    firstIncomplete: firstIncomplete ? firstIncomplete : false,
+    holesScored
+  };
+};
+
 export default MatchCard;
-export { getMatchScore, getPrettyDate, getPrettyScore };
+export {
+  getMatchScore,
+  getPrettyDate,
+  getPrettyScore,
+  getFirstIncompleteHoleId
+};
