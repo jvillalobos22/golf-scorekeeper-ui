@@ -1,10 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Button from '../Button/Button';
+import Button, { InlineButton, SmallButton } from '../Button/Button';
 import './MatchCard.css';
 import { shortMonths } from '../../helpers/months';
 
 const MatchCard = ({ match, className }) => {
+  const completedHolesObj = getFirstIncompleteHoleId(match.holes);
+
   return (
     <div className={`match_card ${className}`}>
       <h3>{match.title}</h3>
@@ -18,14 +20,37 @@ const MatchCard = ({ match, className }) => {
         <span>{match.course.holes}</span> Holes
       </p>
       <div className="score">
-        <span>Score:</span>
-        <strong>{getMatchScore(match.holes)}</strong> ({getPrettyScore(
-          match.holes,
-          match.par
-        )})
+        {match.isComplete ||
+        completedHolesObj.holesScored === match.holes.length ? (
+          <div>
+            <span>Score:</span>
+            <strong>{getMatchScore(match.holes)}</strong> ({getPrettyScore(
+              match.holes,
+              match.par
+            )})
+          </div>
+        ) : (
+          <div className="incomplete">
+            <span>
+              In Progress ({completedHolesObj.holesScored} /{' '}
+              {match.holes.length})
+            </span>
+            <div>
+              {completedHolesObj.firstIncomplete && (
+                <Link
+                  to={`/play/${match._id}/hole/${
+                    completedHolesObj.firstIncomplete
+                  }`}
+                >
+                  <InlineButton>Continue Match</InlineButton>
+                </Link>
+              )}
+            </div>
+          </div>
+        )}
       </div>
       <Link to={`/matches/${match._id}`}>
-        <Button>Details</Button>
+        <SmallButton>Scorecard</SmallButton>
       </Link>
     </div>
   );

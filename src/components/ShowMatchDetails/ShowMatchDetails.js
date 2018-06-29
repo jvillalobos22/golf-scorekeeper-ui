@@ -9,7 +9,7 @@ import {
   getFirstIncompleteHoleId
 } from '../MatchCard/MatchCard';
 import { doCompleteMatch } from '../../redux/actions/match';
-import Button from '../Button/Button';
+import Button, { GhostButton } from '../Button/Button';
 import './ShowMatchDetails.css';
 
 const ShowMatchDetails = ({ match, ...props }) => {
@@ -18,9 +18,9 @@ const ShowMatchDetails = ({ match, ...props }) => {
   return (
     <div>
       <Link to="/">
-        <Button>
-          <FontAwesomeIcon icon="caret-left" size="lg" />&nbsp;Back
-        </Button>
+        <GhostButton>
+          <FontAwesomeIcon icon="caret-left" size="lg" />&nbsp;&nbsp;All Matches
+        </GhostButton>
       </Link>
       <div className="course_info">
         <h1>{match.title}</h1>
