@@ -62,7 +62,7 @@ const getFirstIncompleteHoleId = holes => {
   let holesScored = 0;
   holes.map(hole => {
     if (!firstIncomplete && hole.score === 0) {
-      firstIncomplete = hole.id;
+      firstIncomplete = hole.holeNumber;
     }
     holesScored = hole.score === 0 ? holesScored : holesScored + 1;
     return hole;
