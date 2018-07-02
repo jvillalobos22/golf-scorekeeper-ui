@@ -8,15 +8,42 @@ import {
   getPrettyScore,
   getFirstIncompleteHoleId
 } from '../MatchCard/MatchCard';
-import { doCompleteMatch } from '../../redux/actions/match';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
+import { SuccessNotification } from '../Notification/Notification';
+import {
+  doCompleteMatch,
+  doMatchDetailsErrorClear,
+  doMatchDetailsSuccessClear
+} from '../../redux/actions/matchDetails';
 import Button, { GhostButton } from '../Button/Button';
 import './ShowMatchDetails.css';
 
-const ShowMatchDetails = ({ match, ...props }) => {
+const ShowMatchDetails = ({
+  match,
+  matchDetailsError,
+  matchDetailsSuccess,
+  ...props
+}) => {
   const completedHolesObj = getFirstIncompleteHoleId(match.holes);
 
   return (
     <div>
+      {matchDetailsSuccess && (
+        <SuccessNotification className="update_success">
+          This match has been succesfully completed.
+          <button type="button" onClick={() => props.onClearSuccess()}>
+            <FontAwesomeIcon icon="window-close" />
+          </button>
+        </SuccessNotification>
+      )}
+      {matchDetailsError && (
+        <div className="connection_error">
+          <ErrorMessage errorMsg="There was an issue saving to the database. It may be due to a poor connection. Continue playing and try to save your scores again later. CAUTION: Refreshing your page may wipe out any scores that have not been saved." />
+          <button type="button" onClick={() => props.onClearError()}>
+            <FontAwesomeIcon icon="window-close" />
+          </button>
+        </div>
+      )}
       <Link to="/">
         <GhostButton>
           <FontAwesomeIcon icon="caret-left" size="lg" />&nbsp;&nbsp;All Matches
@@ -115,12 +142,21 @@ const ShowMatchDetails = ({ match, ...props }) => {
   );
 };
 
+const mapStateToProps = state => {
+  return {
+    matchDetailsError: state.matchDetailsState.updateError,
+    matchDetailsSuccess: state.matchDetailsState.updateSuccess
+  };
+};
+
 const mapDispatchToProps = dispatch => ({
-  onCompleteMatch: id => dispatch(doCompleteMatch(id))
+  onCompleteMatch: id => dispatch(doCompleteMatch(id)),
+  onClearError: () => dispatch(doMatchDetailsErrorClear()),
+  onClearSuccess: () => dispatch(doMatchDetailsSuccessClear())
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(ShowMatchDetails);
 // export default ShowMatchDetails;

@@ -1,11 +1,9 @@
 import orm from '../models/index';
 import {
   CREATE_MATCH_SUCCESS,
-  CREATE_MATCH_ERROR,
-  DO_COMPLETE_MATCH,
+  DO_COMPLETE_MATCH_SUCCESS,
   MATCHES_ADD,
-  PATCH_SCORE_UPDATE_SUCCESS,
-  PATCH_SCORE_UPDATE_ERROR
+  PATCH_SCORE_UPDATE_SUCCESS
 } from '../actions/actionTypes';
 
 const applyMatchesAdd = (action, Hole, Match) => {
@@ -72,7 +70,7 @@ const ormReducer = (dbState, action) => {
     case PATCH_SCORE_UPDATE_SUCCESS:
       applyScoreUpdate(action, Hole, Match);
       break;
-    case DO_COMPLETE_MATCH:
+    case DO_COMPLETE_MATCH_SUCCESS:
       applyCompleteMatch(action, Match);
       break;
     default:

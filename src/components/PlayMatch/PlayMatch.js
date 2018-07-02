@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { matchesSelector } from '../../redux/selectors/match';
-import { doSetMatchId } from '../../redux/actions/match';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import {
   SuccessNotification,

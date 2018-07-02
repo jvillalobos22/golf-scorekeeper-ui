@@ -2,8 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import fontawesome from '@fortawesome/fontawesome';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-// import { faPen } from '@fortawesome/free-solid-svg-icons';
 import {
   faPencilAlt,
   faCaretLeft,
@@ -26,7 +24,9 @@ fontawesome.library.add(
   faCaretRight,
   faCaretDown,
   faCaretUp,
-  faCheck
+  faCheck,
+  faExclamation,
+  faWindowClose
 );
 
 ReactDOM.render(

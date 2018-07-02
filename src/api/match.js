@@ -57,4 +57,18 @@ const patchScoreUpdate = ({ matchId, newScores }) => {
   });
 };
 
-export { fetchMatches, postMatch, patchScoreUpdate };
+const patchCompletedMatch = matchId => {
+  return fetch(GS_API_BASE_URL + `/matches/${matchId}`, {
+    method: 'PATCH',
+    body: JSON.stringify({
+      isComplete: true
+    }),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }).then(res => {
+    return res.json();
+  });
+};
+
+export { fetchMatches, postMatch, patchScoreUpdate, patchCompletedMatch };

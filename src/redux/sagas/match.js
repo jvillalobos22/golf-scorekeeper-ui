@@ -6,10 +6,19 @@ import {
   doMatchCreateError
 } from '../actions/match';
 import {
+  doCompleteMatchSuccess,
+  doCompleteMatchError
+} from '../actions/matchDetails';
+import {
   doPatchScoreUpdateSuccess,
   doPatchScoreUpdateError
 } from '../actions/playMatch';
-import { fetchMatches, postMatch, patchScoreUpdate } from '../../api/match';
+import {
+  fetchMatches,
+  postMatch,
+  patchScoreUpdate,
+  patchCompletedMatch
+} from '../../api/match';
 
 function* handleFetchMatches(action) {
   const { query } = action;
@@ -27,24 +36,33 @@ function* handleCreateMatch(action) {
 
   try {
     const result = yield call(postMatch, match);
-    // Call Success Action
-    console.log('RESULT: ', result);
     yield put(doMatchCreateSuccess(result));
   } catch (error) {
-    // Call Error Action
     yield put(doMatchCreateError(error));
   }
 }
 
 function* handleUpdateMatch(action) {
-  console.log('handleUpdateMatch()');
-  console.log(action);
   try {
     const result = yield call(patchScoreUpdate, action.payload);
-    console.log('RESULT: ', result);
     yield put(doPatchScoreUpdateSuccess(result.match));
   } catch (error) {
     yield put(doPatchScoreUpdateError(error));
   }
 }
-export { handleFetchMatches, handleCreateMatch, handleUpdateMatch };
+
+function* handleCompleteMatch(action) {
+  try {
+    const result = yield call(patchCompletedMatch, action.id);
+    yield put(doCompleteMatchSuccess(result.match._id));
+  } catch (error) {
+    yield put(doCompleteMatchError(error));
+  }
+}
+
+export {
+  handleFetchMatches,
+  handleCreateMatch,
+  handleUpdateMatch,
+  handleCompleteMatch
+};

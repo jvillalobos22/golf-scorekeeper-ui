@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Button, { InlineButton, SmallButton } from '../Button/Button';
+import { InlineButton, SmallButton } from '../Button/Button';
 import './MatchCard.css';
 import { shortMonths } from '../../helpers/months';
 
