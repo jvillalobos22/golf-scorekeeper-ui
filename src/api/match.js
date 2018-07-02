@@ -58,7 +58,7 @@ const patchScoreUpdate = ({ matchId, newScores }) => {
 };
 
 const patchCompletedMatch = matchId => {
-  return fetch(GS_API_BASE_URL + `/matches/${matchId}`, {
+  return fetch(GS_API_BASE_URL + `xxxxxs/matches/${matchId}`, {
     method: 'PATCH',
     body: JSON.stringify({
       isComplete: true

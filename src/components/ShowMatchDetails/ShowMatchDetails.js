@@ -8,7 +8,9 @@ import {
   getPrettyScore,
   getFirstIncompleteHoleId
 } from '../MatchCard/MatchCard';
-import ErrorMessage from '../ErrorMessage/ErrorMessage';
+import ErrorMessage, {
+  ClosableErrorMessage
+} from '../ErrorMessage/ErrorMessage';
 import { SuccessNotification } from '../Notification/Notification';
 import {
   doCompleteMatch,
@@ -36,14 +38,11 @@ const ShowMatchDetails = ({
           </button>
         </SuccessNotification>
       )}
-      {matchDetailsError && (
-        <div className="connection_error">
-          <ErrorMessage errorMsg="There was an issue saving to the database. It may be due to a poor connection. Continue playing and try to save your scores again later. CAUTION: Refreshing your page may wipe out any scores that have not been saved." />
-          <button type="button" onClick={() => props.onClearError()}>
-            <FontAwesomeIcon icon="window-close" />
-          </button>
-        </div>
-      )}
+      {matchDetailsError && <ClosableErrorMessage
+          className="connection_error" 
+          onClearError={() => props.onClearError()}
+          errorMsg="There was an issue saving to the database. It may be due to a poor connection. Try to complete the match again later." 
+          /> }
       <Link to="/">
         <GhostButton>
           <FontAwesomeIcon icon="caret-left" size="lg" />&nbsp;&nbsp;All Matches
