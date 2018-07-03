@@ -15,9 +15,27 @@ class PlayHole extends Component {
     this.props.updateScore(newHole);
   };
 
+  setTeeDirection = newTeeDir => {
+    const newHole = { ...this.props.holeScore };
+    newHole.teeDirection = newTeeDir;
+    this.props.updateScore(newHole);
+  };
+
   scoreUpdate = newScore => {
     const newHole = { ...this.props.holeScore };
     newHole.score = newScore ? newScore.value : 0;
+    this.props.updateScore(newHole);
+  };
+
+  puttsUpdate = newPutts => {
+    const newHole = { ...this.props.holeScore };
+    newHole.putts = newPutts ? newPutts.value : 0;
+    this.props.updateScore(newHole);
+  };
+
+  mulligansUpdate = newMulligans => {
+    const newHole = { ...this.props.holeScore };
+    newHole.mulligans = newMulligans ? newMulligans.value : 0;
     this.props.updateScore(newHole);
   };
 
@@ -52,6 +70,11 @@ class PlayHole extends Component {
             value={holeScore.par}
             className="some-class"
           />
+          <label>Tee Direction</label>
+          <TeeSelect
+            setTeeDirection={dir => this.setTeeDirection(dir)}
+            value={holeScore.teeDirection}
+          />
           <div className="input_field">
             <label>Score</label>
             <Select
@@ -61,6 +84,49 @@ class PlayHole extends Component {
               onChange={this.scoreUpdate}
               options={[
                 { value: 1, label: '1 - Hole In One!' },
+                { value: 2, label: '2' },
+                { value: 3, label: '3' },
+                { value: 4, label: '4' },
+                { value: 5, label: '5' },
+                { value: 6, label: '6' },
+                { value: 7, label: '7' },
+                { value: 8, label: '8' },
+                { value: 9, label: '9' },
+                { value: 10, label: '10' }
+              ]}
+            />
+          </div>
+          <div className="input_field">
+            <label>Number of Putts</label>
+            <Select
+              name="score"
+              value={holeScore.putts}
+              clearable={true}
+              onChange={this.puttsUpdate}
+              options={[
+                { value: 1, label: '1' },
+                { value: 2, label: '2' },
+                { value: 3, label: '3' },
+                { value: 4, label: '4' },
+                { value: 5, label: '5' },
+                { value: 6, label: '6' },
+                { value: 7, label: '7' },
+                { value: 8, label: '8' },
+                { value: 9, label: '9' },
+                { value: 10, label: '10' }
+              ]}
+            />
+          </div>
+          <div className="input_field">
+            <label>Mulligans</label>
+            <Select
+              name="score"
+              value={holeScore.mulligans}
+              clearable={true}
+              onChange={this.mulligansUpdate}
+              options={[
+                { value: 0, label: '0' },
+                { value: 1, label: '1' },
                 { value: 2, label: '2' },
                 { value: 3, label: '3' },
                 { value: 4, label: '4' },
@@ -116,6 +182,35 @@ const ParSelect = ({ setPar, className, value }) => (
       onClick={() => setPar(5)}
     >
       5
+    </button>
+  </div>
+);
+
+const TeeSelect = ({ setTeeDirection, className, value }) => (
+  <div className={className ? `tee_direction ${className}` : 'tee_direction'}>
+    <button
+      type="button"
+      className={value === 'LEFT' ? 'selected' : ''}
+      onClick={() => setTeeDirection('LEFT')}
+    >
+      <span>Miss Left</span>
+      <FontAwesomeIcon icon="arrow-left" />
+    </button>
+    <button
+      type="button"
+      className={value === 'CENTER' ? 'selected' : ''}
+      onClick={() => setTeeDirection('CENTER')}
+    >
+      <span>Fairway Hit</span>
+      <FontAwesomeIcon icon="arrow-up" />
+    </button>
+    <button
+      type="button"
+      className={value === 'RIGHT' ? 'selected' : ''}
+      onClick={() => setTeeDirection('RIGHT')}
+    >
+      <span>Miss Right</span>
+      <FontAwesomeIcon icon="arrow-right" />
     </button>
   </div>
 );

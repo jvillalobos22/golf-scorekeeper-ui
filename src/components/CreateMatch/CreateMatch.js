@@ -13,12 +13,13 @@ class CreateMatch extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      holesSelect: 18,
       course: {
         name: '',
-        location: '',
-        par: 72
+        location: ''
       },
+      title: '',
+      holesSelect: 18,
+      par: 72,
       date: new Date()
     };
   }
@@ -35,6 +36,10 @@ class CreateMatch extends Component {
     this.setState({ course: newCourse });
   };
 
+  setMatchTitle = newTitle => {
+    this.setState({ title: newTitle });
+  };
+
   setCourseLocation = newLocation => {
     const { course } = this.state;
     let newCourse = { ...course };
@@ -43,10 +48,9 @@ class CreateMatch extends Component {
   };
 
   setCoursePar = par => {
-    const { course } = this.state;
-    let newCourse = { ...course };
-    newCourse.par = Number(par);
-    this.setState({ course: newCourse });
+    console.log('this.setCoursePar()');
+    let newPar = Number(par);
+    this.setState({ par: newPar });
   };
 
   holeSelectChange = holesSelect => {
@@ -54,10 +58,12 @@ class CreateMatch extends Component {
   };
 
   handleSubmit = e => {
-    const { holesSelect, course, date } = this.state;
+    const { holesSelect, course, date, title, par } = this.state;
     const match = {
       course,
-      holesSelect,
+      title,
+      numberHoles: holesSelect,
+      par,
       date
     };
     e.preventDefault();
@@ -69,7 +75,7 @@ class CreateMatch extends Component {
   };
 
   render() {
-    const { holesSelect, course } = this.state;
+    const { holesSelect, course, title, par } = this.state;
     const { postError, postSuccess, createdMatchId } = this.props;
 
     return (
@@ -91,6 +97,13 @@ class CreateMatch extends Component {
             <fieldset>
               <legend>Course Info</legend>
               <InputField
+                labelText="Match Title"
+                value={title}
+                name="match_title"
+                onChange={e => this.setMatchTitle(e.target.value)}
+                required
+              />
+              <InputField
                 labelText="Course Name"
                 value={course.name}
                 name="course_name"
@@ -110,7 +123,7 @@ class CreateMatch extends Component {
                   className="course_par_input"
                   min={3}
                   max={100}
-                  value={course.par}
+                  value={par}
                   onChange={(num, string, input) => this.setCoursePar(num)}
                   strict
                   required

@@ -5,7 +5,7 @@ const fetchMatches = query =>
 
 const postMatch = match => {
   const emptyHoles = [];
-  for (let i = 1; i <= match.holesSelect; i++) {
+  for (let i = 1; i <= match.numberHoles; i++) {
     emptyHoles.push({
       holeNumber: i,
       par: 4,
@@ -15,12 +15,12 @@ const postMatch = match => {
       mulligans: 0
     });
   }
+  console.log('<<<<< match >>>>>', match);
   let newMatch = {
     course: {
       name: match.course.name,
       location: match.course.location,
-      par: match.course.par,
-      holes: match.holesSelect
+      holes: match.numberHoles
     },
     holes: emptyHoles,
     date: match.date,
@@ -46,7 +46,10 @@ const patchScoreUpdate = ({ matchId, newScores }) => {
       _id: hole.id,
       holeNumber: hole.holeNumber,
       par: hole.par,
-      score: hole.score
+      score: hole.score,
+      teeDirection: hole.teeDirection,
+      putts: hole.putts,
+      mulligans: hole.mulligans
     };
   });
 

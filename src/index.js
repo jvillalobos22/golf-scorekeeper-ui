@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import fontawesome from '@fortawesome/fontawesome';
 import {
+  faArrowLeft,
+  faArrowRight,
+  faArrowUp,
   faPencilAlt,
   faCaretLeft,
   faCaretRight,
