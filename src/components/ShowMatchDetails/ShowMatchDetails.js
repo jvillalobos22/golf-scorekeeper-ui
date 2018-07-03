@@ -8,9 +8,7 @@ import {
   getPrettyScore,
   getFirstIncompleteHoleId
 } from '../MatchCard/MatchCard';
-import ErrorMessage, {
-  ClosableErrorMessage
-} from '../ErrorMessage/ErrorMessage';
+import { ClosableErrorMessage } from '../ErrorMessage/ErrorMessage';
 import { SuccessNotification } from '../Notification/Notification';
 import {
   doCompleteMatch,
@@ -38,11 +36,13 @@ const ShowMatchDetails = ({
           </button>
         </SuccessNotification>
       )}
-      {matchDetailsError && <ClosableErrorMessage
-          className="connection_error" 
+      {matchDetailsError && (
+        <ClosableErrorMessage
+          className="connection_error"
           onClearError={() => props.onClearError()}
-          errorMsg="There was an issue saving to the database. It may be due to a poor connection. Try to complete the match again later." 
-          /> }
+          errorMsg="There was an issue saving to the database. It may be due to a poor connection. Try to complete the match again later."
+        />
+      )}
       <Link to="/">
         <GhostButton>
           <FontAwesomeIcon icon="caret-left" size="lg" />&nbsp;&nbsp;All Matches
@@ -110,34 +110,40 @@ const ShowMatchDetails = ({
           <span className="ten">Hole</span>
           <span className="ten">Par</span>
           <span className="ten">Score</span>
+          <span className="ten">Fairway</span>
+          <span className="ten">Putts</span>
+          <span className="ten">Mulligans</span>
         </div>
         {match.holes.map(hole => {
-          return (
-            <Link
-              className="hole_link"
-              to={`/play/${match._id}/hole/${hole.holeNumber}`}
-              key={hole.id}
-            >
-              <div className="scorecard_row">
-                <span className="ten scorecard_holenumber">
-                  <FontAwesomeIcon
-                    className="hole_edit"
-                    icon="pencil-alt"
-                    size="sm"
-                  />
-                  {hole.holeNumber}
-                </span>
-
-                <span className="ten">{hole.par}</span>
-                <span className="ten">
-                  {hole.score} ({getPrettyScore([hole], hole.par)})
-                </span>
-              </div>
-            </Link>
-          );
+          return <ScoreCardRow match={match} hole={hole} />;
         })}
       </div>
     </div>
+  );
+};
+
+const ScoreCardRow = ({ match, hole }) => {
+  return (
+    <Link
+      className="hole_link"
+      to={`/play/${match._id}/hole/${hole.holeNumber}`}
+      key={hole.id}
+    >
+      <div className="scorecard_row">
+        <span className="ten scorecard_holenumber">
+          <FontAwesomeIcon className="hole_edit" icon="pencil-alt" size="sm" />
+          {hole.holeNumber}
+        </span>
+
+        <span className="ten">{hole.par}</span>
+        <span className="ten">
+          {hole.score} ({getPrettyScore([hole], hole.par)})
+        </span>
+        <span className="ten">{hole.teeDirection}</span>
+        <span className="ten">{hole.putts ? hole.putts : '-'}</span>
+        <span className="ten">{hole.mulligans ? hole.mulligans : '-'}</span>
+      </div>
+    </Link>
   );
 };
 

@@ -9,7 +9,10 @@ const postMatch = match => {
     emptyHoles.push({
       holeNumber: i,
       par: 4,
-      score: 0
+      score: 0,
+      teeDirection: '-',
+      putts: 0,
+      mulligans: 0
     });
   }
   let newMatch = {
@@ -20,7 +23,10 @@ const postMatch = match => {
       holes: match.holesSelect
     },
     holes: emptyHoles,
-    date: match.date
+    date: match.date,
+    title: match.title,
+    par: match.par,
+    numberHoles: match.numberHoles
   };
 
   return fetch(GS_API_BASE_URL + '/matches', {
