@@ -254,5 +254,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(PlayHole);
-
-// export default PlayHole;
