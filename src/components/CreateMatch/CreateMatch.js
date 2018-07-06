@@ -194,4 +194,4 @@ export default connect(
 )(CreateMatch);
 
 // export default CreateMatch;
-export { CreateMatchButton };
+export { CreateMatchButton, InputField };

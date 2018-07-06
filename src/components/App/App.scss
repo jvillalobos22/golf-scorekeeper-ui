@@ -16,6 +16,12 @@ $primary_color: #799f0c;
   flex-wrap: wrap;
 }
 
+.app.authenticate {
+  background: url('/images/login-bg.jpg');
+  background-position: fixed;
+  height: 100vh;
+}
+
 .flex_card {
   width: 32%;
   box-sizing: border-box;
@@ -34,6 +40,26 @@ h1 {
     content: '';
     height: 5px;
     width: 80px;
+    background-color: $primary_color;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+}
+
+h2.topheader {
+  font-size: 1.5rem;
+  font-weight: 300;
+  margin-top: 0.75rem;
+  margin-bottom: 1.75rem;
+  padding-bottom: 10px;
+  color: $primary_color;
+  position: relative;
+
+  &:after {
+    content: '';
+    height: 3px;
+    width: 50px;
     background-color: $primary_color;
     position: absolute;
     bottom: 0;
