@@ -11,6 +11,10 @@ class Authenticate extends Component {
       this.props.setPgClass('authenticate');
   }
 
+  componentWillUnmount() {
+    this.props.setPgClass('');
+  }
+
   render() {
     const { signup } = this.props;
     return (

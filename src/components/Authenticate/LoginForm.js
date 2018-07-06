@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Link, Redirect } from 'react-router-dom';
 
+import {
+  doPostLogin,
+  doPostLoginErrorClear
+} from '../../redux/actions/authenticate';
 import { InlineButton } from '../Button/Button';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 class LoginForm extends Component {
   constructor(props) {
@@ -13,18 +19,36 @@ class LoginForm extends Component {
   }
 
   handleChange = e => {
+    const { login_error, onErrorClear } = this.props;
+    if (login_error) onErrorClear();
     this.setState({
       [e.target.name]: e.target.value
     });
   };
 
+  handleSubmit(event) {
+    const { username, password } = this.state;
+    event.preventDefault();
+    console.log('handleSubmit');
+
+    const credentials = {
+      username,
+      password
+    };
+
+    this.props.onPostLogin(credentials);
+  }
+
   render() {
     const { username, password } = this.state;
-    const { setForm } = this.props;
-    return (
+    const { setForm, loggedIn, login_error } = this.props;
+    return loggedIn ? (
+      <Redirect to={`/`} />
+    ) : (
       <div className="login_form">
         <h2 className="topheader">Login</h2>
-        <form>
+        <form onSubmit={e => this.handleSubmit(e)}>
+          {login_error && <ErrorMessage errorMsg={login_error} />}
           <InputField
             labelText="Username"
             type="text"
@@ -43,7 +67,7 @@ class LoginForm extends Component {
             <Link to="/signup">
               <InlineButton>Create new account</InlineButton>
             </Link>
-            <input class="button" type="submit" value="Login" />
+            <input className="button" type="submit" value="Login" />
           </div>
         </form>
       </div>
@@ -60,5 +84,25 @@ const InputField = ({ className, labelText, name, type, ...rest }) => {
   );
 };
 
-export default LoginForm;
+const mapStateToProps = state => {
+  const { authenticationState } = state;
+  return {
+    loggedIn: authenticationState.loggedIn,
+    user_id: authenticationState.user_id,
+    user_display_name: authenticationState.user_display_name,
+    login_success: authenticationState.login_success,
+    login_error: authenticationState.login_error
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  onPostLogin: credentials => dispatch(doPostLogin(credentials)),
+  onErrorClear: () => dispatch(doPostLoginErrorClear())
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LoginForm);
+
 export { InputField };
