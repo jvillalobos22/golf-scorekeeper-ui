@@ -1,6 +1,11 @@
 import { call, put } from 'redux-saga/effects';
-import { postLogin } from '../../api/authenticate';
-import { doPostLoginSuccess, doPostLoginError } from '../actions/authenticate';
+import { postLogin, getUser } from '../../api/authenticate';
+import {
+  doPostLoginSuccess,
+  doPostLoginError,
+  doGetUserFailure,
+  doGetUserSuccess
+} from '../actions/authenticate';
 
 function* handlePostLogin(action) {
   const { payload } = action;
@@ -16,4 +21,19 @@ function* handlePostLogin(action) {
   }
 }
 
-export { handlePostLogin };
+function* handleGetUser() {
+  try {
+    console.log(handleGetUser());
+    const result = yield call(getUser);
+    console.log('result', result);
+    if (result.user !== null) {
+      yield put(doGetUserSuccess(result.user));
+    } else {
+      yield put(doGetUserFailure());
+    }
+  } catch (error) {
+    yield put(doGetUserFailure());
+  }
+}
+
+export { handlePostLogin, handleGetUser };

@@ -1,4 +1,7 @@
 import {
+  GET_USER,
+  GET_USER_SUCCESS,
+  GET_USER_FAILURE,
   POST_LOGIN,
   POST_LOGIN_SUCCESS,
   POST_LOGIN_ERROR,
@@ -32,7 +35,29 @@ const doPostLoginErrorClear = error => {
   };
 };
 
+const doGetUser = () => {
+  return {
+    type: GET_USER
+  };
+};
+
+const doGetUserSuccess = user => {
+  return {
+    type: GET_USER_SUCCESS,
+    user
+  };
+};
+
+const doGetUserFailure = () => {
+  return {
+    type: GET_USER_FAILURE
+  };
+};
+
 export {
+  doGetUser,
+  doGetUserSuccess,
+  doGetUserFailure,
   doPostLogin,
   doPostLoginSuccess,
   doPostLoginError,

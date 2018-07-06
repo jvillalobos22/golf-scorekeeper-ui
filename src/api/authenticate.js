@@ -15,4 +15,10 @@ const postLogin = credentials => {
   });
 };
 
-export { postLogin };
+const getUser = () => {
+  return fetch(GS_API_BASE_URL + '/user').then(res => {
+    return res.json();
+  });
+};
+
+export { postLogin, getUser };

@@ -9,8 +9,10 @@ import MatchDetail from '../MatchDetail/MatchDetail';
 import CreateMatch from '../CreateMatch/CreateMatch';
 import PlayMatch from '../PlayMatch/PlayMatch';
 import { doFetchMatches } from '../../redux/actions/match';
+import { doGetUser } from '../../redux/actions/authenticate';
 import './App.css';
 import Authenticate from '../Authenticate/Authenticate';
+import { getLoggedInUser } from '../../redux/selectors/user';
 
 class App extends Component {
   constructor(props) {
@@ -23,6 +25,19 @@ class App extends Component {
   }
 
   componentDidMount() {
+    const { loggedIn } = this.props;
+    if (!loggedIn) {
+      console.log('no current user');
+      this.props.onGetUser();
+    }
+    // if loggedIn
+    //   - do nothing
+    // else
+    //   - see if user is saved in session
+    //   if yes
+    //     - set auth state
+    //   else
+    //     - redirect to login
     this.props.onFetchMatches('/matches');
   }
 
@@ -91,11 +106,20 @@ class App extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  const { authenticationState } = state;
+  return {
+    loggedIn: authenticationState.loggedIn,
+    user: getLoggedInUser(state)
+  };
+};
+
 const mapDispatchToProps = dispatch => ({
-  onFetchMatches: query => dispatch(doFetchMatches(query))
+  onFetchMatches: query => dispatch(doFetchMatches(query)),
+  onGetUser: () => dispatch(doGetUser())
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(App);
