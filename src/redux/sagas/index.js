@@ -5,7 +5,8 @@ import {
   GET_USER,
   POST_LOGIN,
   MATCHES_FETCH,
-  PATCH_SCORE_UPDATE
+  PATCH_SCORE_UPDATE,
+  LOGOUT
 } from '../actions/actionTypes';
 import {
   handleFetchMatches,
@@ -13,7 +14,7 @@ import {
   handleUpdateMatch,
   handleCompleteMatch
 } from './match';
-import { handlePostLogin, handleGetUser } from './authenticate';
+import { handlePostLogin, handleGetUser, handleLogout } from './authenticate';
 
 function* watchAll() {
   yield all([takeEvery(MATCHES_FETCH, handleFetchMatches)]);
@@ -22,6 +23,7 @@ function* watchAll() {
   yield all([takeEvery(DO_COMPLETE_MATCH, handleCompleteMatch)]);
   yield all([takeEvery(POST_LOGIN, handlePostLogin)]);
   yield all([takeEvery(GET_USER, handleGetUser)]);
+  yield all([takeEvery(LOGOUT, handleLogout)]);
 }
 
 export default watchAll;

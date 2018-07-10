@@ -3,7 +3,8 @@ import {
   CREATE_MATCH_SUCCESS,
   DO_COMPLETE_MATCH_SUCCESS,
   MATCHES_ADD,
-  PATCH_SCORE_UPDATE_SUCCESS
+  PATCH_SCORE_UPDATE_SUCCESS,
+  LOGOUT_SUCCESS
 } from '../actions/actionTypes';
 
 const applyMatchesAdd = (action, Hole, Match) => {
@@ -73,6 +74,9 @@ const ormReducer = (dbState, action) => {
     case DO_COMPLETE_MATCH_SUCCESS:
       applyCompleteMatch(action, Match);
       break;
+    case LOGOUT_SUCCESS: {
+      return orm.getEmptyState();
+    }
     default:
       break;
   }

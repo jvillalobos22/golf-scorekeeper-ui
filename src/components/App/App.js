@@ -8,6 +8,7 @@ import Matches from '../Matches/Matches';
 import MatchDetail from '../MatchDetail/MatchDetail';
 import CreateMatch from '../CreateMatch/CreateMatch';
 import PlayMatch from '../PlayMatch/PlayMatch';
+import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
 import { doFetchMatches } from '../../redux/actions/match';
 import { doGetUser } from '../../redux/actions/authenticate';
 import './App.css';
@@ -63,7 +64,7 @@ class App extends Component {
         <div className={`app ${pageContainerClass}`}>
           <Header />
           <Switch>
-            <Route exact path="/" component={Matches} />
+            <ProtectedRoute exact path="/" component={Matches} />
             <Route
               exact
               path="/login"
@@ -90,16 +91,16 @@ class App extends Component {
                 );
               }}
             />
-            <Route
+            <ProtectedRoute
               path="/matches/:matchId"
-              render={({ match }) => {
+              component={({ match }) => {
                 return <MatchDetail matchId={match.params.matchId} />;
               }}
             />
-            <Route path="/new-match" component={CreateMatch} />
-            <Route
+            <ProtectedRoute path="/new-match" component={CreateMatch} />
+            <ProtectedRoute
               path="/play/:matchId/hole/:holeNumber"
-              render={({ match }) => {
+              component={({ match }) => {
                 return (
                   <PlayMatch
                     matchId={match.params.matchId}
@@ -108,12 +109,20 @@ class App extends Component {
                 );
               }}
             />
+            <ProtectedRoute component={RouteNotFound} />
           </Switch>
         </div>
       </Router>
     );
   }
 }
+
+const RouteNotFound = ({ location }) => (
+  <div>
+    <h1>404 Not Found</h1>
+    <code>{location.pathname}</code>
+  </div>
+);
 
 const mapStateToProps = state => {
   const { authenticationState } = state;

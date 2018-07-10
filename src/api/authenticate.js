@@ -28,4 +28,23 @@ const getUser = xAuth => {
   });
 };
 
-export { postLogin, getUser };
+const deleteLogout = xAuth => {
+  console.log('xAuth');
+  console.log(xAuth);
+  return fetch(GS_API_BASE_URL + '/user/logout', {
+    method: 'DELETE',
+    headers: {
+      'x-auth': xAuth
+    }
+  })
+    .then(res => {
+      if (res.status === 200) return Promise.resolve();
+      return Promise.reject();
+    })
+    .catch(err => {
+      console.log('error', err);
+      return Promise.reject();
+    });
+};
+
+export { postLogin, getUser, deleteLogout };

@@ -1,17 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { doLogout } from '../../../redux/actions/authenticate';
 import Dropdown from '../../Dropdown/Dropdown';
 
-const UserDropdown = ({ xAuth, children }) => {
-  const callXAuth = () => {
-    console.log('Dropdown xAuth');
-    console.log(xAuth);
+const UserDropdown = ({ xAuth, children, onLogout }) => {
+  const callLogout = () => {
+    onLogout(xAuth);
   };
 
   const listArray = [
     {
       label: 'Logout',
-      onClick: () => callXAuth()
+      onClick: () => callLogout()
     }
   ];
 
@@ -28,7 +28,13 @@ const mapStateToProps = state => {
   };
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+    onLogout: xAuth => dispatch(doLogout(xAuth))
+  };
+};
+
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(UserDropdown);

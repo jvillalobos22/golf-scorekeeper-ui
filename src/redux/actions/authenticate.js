@@ -5,7 +5,11 @@ import {
   POST_LOGIN,
   POST_LOGIN_SUCCESS,
   POST_LOGIN_ERROR,
-  POST_LOGIN_ERROR_CLEAR
+  POST_LOGIN_ERROR_CLEAR,
+  LOGOUT,
+  LOGOUT_SUCCESS,
+  LOGOUT_ERROR,
+  LOGOUT_ERROR_CLEAR
 } from './actionTypes';
 
 const doPostLogin = credentials => {
@@ -60,6 +64,33 @@ const doGetUserFailure = () => {
   };
 };
 
+const doLogout = xAuth => {
+  return {
+    type: LOGOUT,
+    payload: {
+      xAuth
+    }
+  };
+};
+
+const doLogoutSuccess = () => {
+  return {
+    type: LOGOUT_SUCCESS
+  };
+};
+
+const doLogoutError = () => {
+  return {
+    type: LOGOUT_ERROR
+  };
+};
+
+const doLogoutErrorClear = () => {
+  return {
+    type: LOGOUT_ERROR_CLEAR
+  };
+};
+
 export {
   doGetUser,
   doGetUserSuccess,
@@ -67,5 +98,9 @@ export {
   doPostLogin,
   doPostLoginSuccess,
   doPostLoginError,
-  doPostLoginErrorClear
+  doPostLoginErrorClear,
+  doLogout,
+  doLogoutSuccess,
+  doLogoutError,
+  doLogoutErrorClear
 };

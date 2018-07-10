@@ -1,10 +1,12 @@
 import { call, put } from 'redux-saga/effects';
-import { postLogin, getUser } from '../../api/authenticate';
+import { postLogin, getUser, deleteLogout } from '../../api/authenticate';
 import {
   doPostLoginSuccess,
   doPostLoginError,
   doGetUserFailure,
-  doGetUserSuccess
+  doGetUserSuccess,
+  doLogoutSuccess,
+  doLogoutError
 } from '../actions/authenticate';
 
 function* handlePostLogin(action) {
@@ -55,4 +57,17 @@ function* handleGetUser() {
   }
 }
 
-export { handlePostLogin, handleGetUser };
+function* handleLogout(action) {
+  try {
+    console.log('handleLogout()');
+    const result = yield call(deleteLogout, action.payload.xAuth);
+    console.log(result);
+    yield put(doLogoutSuccess());
+    localStorage.clear();
+  } catch (error) {
+    console.log(error);
+    yield put(doLogoutError());
+  }
+}
+
+export { handlePostLogin, handleGetUser, handleLogout };

@@ -1,7 +1,8 @@
 import {
   CREATE_MATCH_SUCCESS,
   CREATE_MATCH_ERROR,
-  CREATE_MATCH_CLEAR
+  CREATE_MATCH_CLEAR,
+  LOGOUT_SUCCESS
 } from '../actions/actionTypes';
 
 const INITIAL_STATE = {
@@ -26,6 +27,9 @@ const createMatchReducer = (state = INITIAL_STATE, action) => {
       };
     }
     case CREATE_MATCH_CLEAR: {
+      return INITIAL_STATE;
+    }
+    case LOGOUT_SUCCESS: {
       return INITIAL_STATE;
     }
     default:
