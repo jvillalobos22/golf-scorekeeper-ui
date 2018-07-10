@@ -6,9 +6,12 @@ import {
   MATCH_DETAILS_SUCCESS_CLEAR
 } from './actionTypes';
 
-const doCompleteMatch = id => ({
+const doCompleteMatch = (id, xAuth) => ({
   type: DO_COMPLETE_MATCH,
-  id
+  payload: {
+    id,
+    xAuth
+  }
 });
 
 const doCompleteMatchSuccess = id => ({

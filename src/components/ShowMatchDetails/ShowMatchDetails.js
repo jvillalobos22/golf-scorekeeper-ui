@@ -22,6 +22,7 @@ const ShowMatchDetails = ({
   match,
   matchDetailsError,
   matchDetailsSuccess,
+  xAuth,
   ...props
 }) => {
   const completedHolesObj = getFirstIncompleteHoleId(match.holes);
@@ -97,7 +98,7 @@ const ShowMatchDetails = ({
                   <Button>Continue Match</Button>
                 </Link>
               ) : (
-                <Button onClick={() => props.onCompleteMatch(match._id)}>
+                <Button onClick={() => props.onCompleteMatch(match._id, xAuth)}>
                   Complete Match
                 </Button>
               )}
@@ -115,7 +116,7 @@ const ShowMatchDetails = ({
           <span className="ten">Mulligans</span>
         </div>
         {match.holes.map(hole => {
-          return <ScoreCardRow match={match} hole={hole} />;
+          return <ScoreCardRow key={hole.id} match={match} hole={hole} />;
         })}
       </div>
     </div>
@@ -150,12 +151,13 @@ const ScoreCardRow = ({ match, hole }) => {
 const mapStateToProps = state => {
   return {
     matchDetailsError: state.matchDetailsState.updateError,
-    matchDetailsSuccess: state.matchDetailsState.updateSuccess
+    matchDetailsSuccess: state.matchDetailsState.updateSuccess,
+    xAuth: state.authenticationState.xAuth
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-  onCompleteMatch: id => dispatch(doCompleteMatch(id)),
+  onCompleteMatch: (id, xAuth) => dispatch(doCompleteMatch(id, xAuth)),
   onClearError: () => dispatch(doMatchDetailsErrorClear()),
   onClearSuccess: () => dispatch(doMatchDetailsSuccessClear())
 });

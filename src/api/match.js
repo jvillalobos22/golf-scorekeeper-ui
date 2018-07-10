@@ -8,7 +8,7 @@ const fetchMatches = xAuth =>
     }
   }).then(res => res.json());
 
-const postMatch = match => {
+const postMatch = ({ match, xAuth }) => {
   const emptyHoles = [];
   for (let i = 1; i <= match.numberHoles; i++) {
     emptyHoles.push({
@@ -38,14 +38,15 @@ const postMatch = match => {
     method: 'POST',
     body: JSON.stringify(newMatch),
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'x-auth': xAuth
     }
   }).then(res => {
     return res.json();
   });
 };
 
-const patchScoreUpdate = ({ matchId, newScores }) => {
+const patchScoreUpdate = ({ matchId, newScores, xAuth }) => {
   const formattedScores = newScores.map(hole => {
     return {
       _id: hole.id,
@@ -64,21 +65,23 @@ const patchScoreUpdate = ({ matchId, newScores }) => {
       holes: formattedScores
     }),
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'x-auth': xAuth
     }
   }).then(res => {
     return res.json();
   });
 };
 
-const patchCompletedMatch = matchId => {
-  return fetch(GS_API_BASE_URL + `/matches/${matchId}`, {
+const patchCompletedMatch = ({ id, xAuth }) => {
+  return fetch(GS_API_BASE_URL + `/matches/${id}`, {
     method: 'PATCH',
     body: JSON.stringify({
       isComplete: true
     }),
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'x-auth': xAuth
     }
   }).then(res => {
     return res.json();
