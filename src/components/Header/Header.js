@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { getLoggedInUser } from '../../redux/selectors/user';
 import LoginButton from '../Authenticate/LoginButton';
+import UserDropdown from './UserDropdown/UserDropdown';
 import './Header.css';
 
 const Header = ({ user }) => {
@@ -30,9 +31,11 @@ const UserInfo = ({ user }) => {
   return (
     <div className="user_info">
       <p>Welcome back, {user.displayName}</p>
-      <div className="user_avatar">
-        {user.displayName.charAt(0).toUpperCase()}
-      </div>
+      <UserDropdown>
+        <div className="user_avatar">
+          {user && user.displayName.charAt(0).toUpperCase()}
+        </div>
+      </UserDropdown>
     </div>
   );
 };
