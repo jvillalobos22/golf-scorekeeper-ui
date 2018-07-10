@@ -8,31 +8,99 @@ import Matches from '../Matches/Matches';
 import MatchDetail from '../MatchDetail/MatchDetail';
 import CreateMatch from '../CreateMatch/CreateMatch';
 import PlayMatch from '../PlayMatch/PlayMatch';
+import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
 import { doFetchMatches } from '../../redux/actions/match';
+import { doGetUser } from '../../redux/actions/authenticate';
 import './App.css';
+import Authenticate from '../Authenticate/Authenticate';
+import { getLoggedInUser } from '../../redux/selectors/user';
 
 class App extends Component {
-  componentDidMount() {
-    this.props.onFetchMatches('/matches');
+  constructor(props) {
+    super(props);
+    this.state = {
+      pageContainerClass: ''
+    };
+
+    this.setPageContainerClass = this.setPageContainerClass.bind(this);
   }
 
+  componentDidMount() {
+    const { loggedIn, xAuth } = this.props;
+    if (!loggedIn) {
+      this.props.onGetUser();
+    }
+
+    // if loggedIn
+    //   - do nothing
+    // else
+    //   - see if user is saved in session
+    //   if yes
+    //     - set auth state
+    //   else
+    //     - redirect to login
+    if (xAuth) {
+      this.props.onFetchMatches(xAuth);
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { xAuth } = this.props;
+    if (prevProps.xAuth !== xAuth && xAuth) {
+      this.props.onFetchMatches(xAuth);
+    }
+  }
+
+  setPageContainerClass = newClass => {
+    this.setState({
+      pageContainerClass: newClass
+    });
+  };
+
   render() {
+    const { pageContainerClass } = this.state;
     return (
       <Router>
-        <div className="app">
+        <div className={`app ${pageContainerClass}`}>
           <Header />
           <Switch>
-            <Route exact path="/" component={Matches} />
+            <ProtectedRoute exact path="/" component={Matches} />
             <Route
-              path="/matches/:matchId"
+              exact
+              path="/login"
               render={({ match }) => {
+                return (
+                  <Authenticate
+                    signup={false}
+                    setPgClass={this.setPageContainerClass}
+                    pgClass={this.state.pageContainerClass}
+                  />
+                );
+              }}
+            />
+            <Route
+              exact
+              path="/signup"
+              render={({ match }) => {
+                return (
+                  <Authenticate
+                    signup={true}
+                    setPgClass={this.setPageContainerClass}
+                    pgClass={this.state.pageContainerClass}
+                  />
+                );
+              }}
+            />
+            <ProtectedRoute
+              path="/matches/:matchId"
+              component={({ match }) => {
                 return <MatchDetail matchId={match.params.matchId} />;
               }}
             />
-            <Route path="/new-match" component={CreateMatch} />
-            <Route
+            <ProtectedRoute path="/new-match" component={CreateMatch} />
+            <ProtectedRoute
               path="/play/:matchId/hole/:holeNumber"
-              render={({ match }) => {
+              component={({ match }) => {
                 return (
                   <PlayMatch
                     matchId={match.params.matchId}
@@ -41,6 +109,7 @@ class App extends Component {
                 );
               }}
             />
+            <ProtectedRoute component={RouteNotFound} />
           </Switch>
         </div>
       </Router>
@@ -48,11 +117,28 @@ class App extends Component {
   }
 }
 
+const RouteNotFound = ({ location }) => (
+  <div>
+    <h1>404 Not Found</h1>
+    <code>{location.pathname}</code>
+  </div>
+);
+
+const mapStateToProps = state => {
+  const { authenticationState } = state;
+  return {
+    loggedIn: authenticationState.loggedIn,
+    xAuth: authenticationState.xAuth,
+    user: getLoggedInUser(state)
+  };
+};
+
 const mapDispatchToProps = dispatch => ({
-  onFetchMatches: query => dispatch(doFetchMatches(query))
+  onFetchMatches: query => dispatch(doFetchMatches(query)),
+  onGetUser: () => dispatch(doGetUser())
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(App);

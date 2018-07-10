@@ -59,6 +59,7 @@ class CreateMatch extends Component {
 
   handleSubmit = e => {
     const { holesSelect, course, date, title, par } = this.state;
+    const { xAuth } = this.props;
     const match = {
       course,
       title,
@@ -70,7 +71,7 @@ class CreateMatch extends Component {
     console.log('Form Submitted');
     // TODO:
     //   - Run Validation -> display errors if necessary
-    this.props.onMatchCreate(match);
+    this.props.onMatchCreate(match, xAuth);
     //   - Display errors or route to first hole form
   };
 
@@ -179,12 +180,13 @@ const mapStateToProps = state => {
   return {
     postError: createMatchState.createMatchError,
     postSuccess: createMatchState.createMatchSuccess,
-    createdMatchId: createMatchState.createdMatchId
+    createdMatchId: createMatchState.createdMatchId,
+    xAuth: state.authenticationState.xAuth
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-  onMatchCreate: query => dispatch(doMatchCreate(query)),
+  onMatchCreate: (match, xAuth) => dispatch(doMatchCreate(match, xAuth)),
   onMatchCreateClear: () => dispatch(doMatchCreateClear())
 });
 
@@ -194,4 +196,4 @@ export default connect(
 )(CreateMatch);
 
 // export default CreateMatch;
-export { CreateMatchButton };
+export { CreateMatchButton, InputField };

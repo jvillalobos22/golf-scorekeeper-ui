@@ -12,11 +12,12 @@ const doSyncUpdate = sync => ({
   sync
 });
 
-const doScoreUpdate = (matchId, newScores) => ({
+const doScoreUpdate = (matchId, newScores, xAuth) => ({
   type: PATCH_SCORE_UPDATE,
   payload: {
     matchId,
-    newScores
+    newScores,
+    xAuth
   }
 });
 

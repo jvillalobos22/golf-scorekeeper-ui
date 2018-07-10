@@ -23,9 +23,12 @@ const doFetchMatchesError = error => ({
   error
 });
 
-const doMatchCreate = match => ({
+const doMatchCreate = (match, xAuth) => ({
   type: CREATE_MATCH_SUBMIT,
-  match
+  payload: {
+    match,
+    xAuth
+  }
 });
 
 const doMatchCreateSuccess = match => ({

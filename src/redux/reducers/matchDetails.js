@@ -2,7 +2,8 @@ import {
   DO_COMPLETE_MATCH_SUCCESS,
   DO_COMPLETE_MATCH_ERROR,
   MATCH_DETAILS_ERROR_CLEAR,
-  MATCH_DETAILS_SUCCESS_CLEAR
+  MATCH_DETAILS_SUCCESS_CLEAR,
+  LOGOUT_SUCCESS
 } from '../actions/actionTypes';
 
 const INITIAL_STATE = {
@@ -35,6 +36,9 @@ const matchDetailsReducer = (state = INITIAL_STATE, action) => {
         ...state,
         updateSuccess: false
       };
+    }
+    case LOGOUT_SUCCESS: {
+      return INITIAL_STATE;
     }
     default:
       return state;

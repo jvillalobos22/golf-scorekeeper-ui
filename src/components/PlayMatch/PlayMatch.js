@@ -57,9 +57,9 @@ class PlayMatch extends Component {
   };
 
   postScoreUpdate = matchId => {
-    const { storeInSync } = this.props;
+    const { storeInSync, xAuth } = this.props;
     const { scores } = this.state;
-    if (!storeInSync) this.props.onScoreUpdate(matchId, scores);
+    if (!storeInSync) this.props.onScoreUpdate(matchId, scores, xAuth);
   };
 
   componentDidUpdate(prevProps) {
@@ -143,15 +143,16 @@ const mapStateToProps = state => {
     matches: matchesSelector(state),
     storeInSync: state.playMatchState.storeInSync,
     updateScoreError: state.playMatchState.updateScoreError,
-    updateScoreSuccess: state.playMatchState.updateScoreSuccess
+    updateScoreSuccess: state.playMatchState.updateScoreSuccess,
+    xAuth: state.authenticationState.xAuth
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onSyncUpdate: sync => dispatch(doSyncUpdate(sync)),
-    onScoreUpdate: (matchId, newScores) =>
-      dispatch(doScoreUpdate(matchId, newScores)),
+    onScoreUpdate: (matchId, newScores, xAuth) =>
+      dispatch(doScoreUpdate(matchId, newScores, xAuth)),
     onClearError: () => dispatch(doClearError()),
     onClearSuccessMessage: () => dispatch(doPatchScoreUpdateSuccessClear())
   };

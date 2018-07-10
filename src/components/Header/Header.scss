@@ -1,15 +1,18 @@
+$primary_color: #799f0c;
+
 .app_header {
+  position: relative;
   padding: 0.5rem 0;
-  background: #799f0c; /* fallback for old browsers */
+  background: $primary_color; /* fallback for old browsers */
   background: -webkit-linear-gradient(
     to right,
     #acbb78,
-    #799f0c
+    $primary_color
   ); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(
     to right,
     #acbb78,
-    #799f0c
+    $primary_color
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
@@ -18,7 +21,112 @@
   color: #fff;
 }
 
+.header_logo {
+  width: auto;
+  display: flex;
+  align-items: center;
+}
+
 .app_header .pg_width {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+}
+
+.header_flex {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+
+.user_info {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  p {
+    color: #fff;
+  }
+}
+
+.user_avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  font-size: 1.125rem;
+  font-weight: 300;
+}
+
+.header_login {
+  .button.ghost_button {
+    background: transparent;
+    color: #fff;
+    border: 1px solid #fff;
+
+    &:hover,
+    &:focus,
+    &:active {
+      color: $primary_color;
+      background: #fff;
+    }
+  }
+}
+
+.header_dropdown {
+  position: static;
+
+  button {
+    border: none;
+    margin: 0;
+    text-decoration: none;
+    cursor: pointer;
+    background: transparent;
+    transition: background 250ms ease-in-out, transform 150ms ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+
+  button:focus {
+    outline: 0;
+    outline-offset: -4px;
+  }
+
+  button:active {
+    transform: scale(0.99);
+  }
+
+  .dropdown_items {
+    position: absolute;
+    top: 65px;
+    right: 0;
+    background: $primary_color;
+    width: auto;
+    min-width: 150px;
+    max-width: 300px;
+    box-sizing: border-box;
+    z-index: 100;
+
+    ul {
+      padding: 0;
+      text-align: center;
+
+      button {
+        font-size: 0.875rem;
+        padding: 0.75rem 0.5rem;
+        width: 100%;
+        color: #fff;
+        font-weight: 300;
+        letter-spacing: 0.3px;
+
+        &:hover,
+        &:focus {
+          background: darken($primary_color, 10%);
+        }
+      }
+    }
+  }
 }

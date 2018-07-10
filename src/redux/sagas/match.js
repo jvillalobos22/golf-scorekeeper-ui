@@ -32,10 +32,8 @@ function* handleFetchMatches(action) {
 }
 
 function* handleCreateMatch(action) {
-  const { match } = action;
-
   try {
-    const result = yield call(postMatch, match);
+    const result = yield call(postMatch, action.payload);
     yield put(doMatchCreateSuccess(result));
   } catch (error) {
     yield put(doMatchCreateError(error));
@@ -53,7 +51,7 @@ function* handleUpdateMatch(action) {
 
 function* handleCompleteMatch(action) {
   try {
-    const result = yield call(patchCompletedMatch, action.id);
+    const result = yield call(patchCompletedMatch, action.payload);
     yield put(doCompleteMatchSuccess(result.match._id));
   } catch (error) {
     yield put(doCompleteMatchError(error));
