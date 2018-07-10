@@ -1,3 +1,6 @@
+$dark_red: #d50000;
+$light_red: #ffebee;
+
 .authenticate_container {
   width: 100%;
   max-width: 500px;
@@ -16,4 +19,26 @@
   flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
+}
+
+.input_validation_issue {
+  input {
+    margin-bottom: 0.25rem;
+
+    &:focus {
+      outline: $dark_red auto 5px;
+    }
+  }
+}
+
+.validation_error {
+  font-size: 0.875rem;
+  font-weight: 300;
+  color: $dark_red;
+  margin-bottom: 1rem;
+}
+
+input.button.disabled {
+  background-color: #e3e3e3;
+  border: 1px #e3e3e3;
 }

@@ -1,12 +1,19 @@
 import { call, put } from 'redux-saga/effects';
-import { postLogin, getUser, deleteLogout } from '../../api/authenticate';
+import {
+  postLogin,
+  postSignup,
+  getUser,
+  deleteLogout
+} from '../../api/authenticate';
 import {
   doPostLoginSuccess,
   doPostLoginError,
   doGetUserFailure,
   doGetUserSuccess,
   doLogoutSuccess,
-  doLogoutError
+  doLogoutError,
+  doPostSignupSuccess,
+  doPostSignupError
 } from '../actions/authenticate';
 
 function* handlePostLogin(action) {
@@ -29,6 +36,27 @@ function* handlePostLogin(action) {
     );
   } catch (error) {
     yield put(doPostLoginError(error));
+  }
+}
+
+function* handleSignup(action) {
+  try {
+    console.log('handleSignup()');
+    console.log(action.payload);
+    const result = yield call(postSignup, action.payload.user);
+    console.log(result);
+    const xAuth = localStorage.getItem('x-auth');
+    yield put(doPostSignupSuccess(result, xAuth));
+    localStorage.setItem(
+      'authenticationState',
+      JSON.stringify({
+        loggedIn: true,
+        user: result
+      })
+    );
+  } catch (error) {
+    console.log(error);
+    yield put(doPostSignupError(error));
   }
 }
 
@@ -70,4 +98,4 @@ function* handleLogout(action) {
   }
 }
 
-export { handlePostLogin, handleGetUser, handleLogout };
+export { handlePostLogin, handleGetUser, handleLogout, handleSignup };

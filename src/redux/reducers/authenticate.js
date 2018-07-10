@@ -6,7 +6,8 @@ import {
   LOGOUT_SUCCESS,
   LOGOUT_ERROR,
   LOGOUT_ERROR_CLEAR,
-  GET_USER_FAILURE
+  GET_USER_FAILURE,
+  POST_SIGNUP_SUCCESS
 } from '../actions/actionTypes';
 
 const INITIAL_STATE = {
@@ -23,6 +24,18 @@ const INITIAL_STATE = {
 const authenticationReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case POST_LOGIN_SUCCESS: {
+      return {
+        loggedIn: true,
+        xAuth: action.payload.xAuth,
+        user_id: action.payload.user._id,
+        user_display_name: action.payload.user.displayName,
+        login_success: true,
+        login_error: '',
+        redirectToLogin: false,
+        logout_error: false
+      };
+    }
+    case POST_SIGNUP_SUCCESS: {
       return {
         loggedIn: true,
         xAuth: action.payload.xAuth,

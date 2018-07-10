@@ -41,7 +41,7 @@ class LoginForm extends Component {
 
   render() {
     const { username, password } = this.state;
-    const { setForm, loggedIn, login_error } = this.props;
+    const { loggedIn, login_error } = this.props;
     return loggedIn ? (
       <Redirect to={`/`} />
     ) : (

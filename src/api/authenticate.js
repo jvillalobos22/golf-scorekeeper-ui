@@ -11,10 +11,31 @@ const postLogin = credentials => {
       'Content-Type': 'application/json'
     }
   }).then(res => {
-    console.log(res.headers.get('x-auth'));
     localStorage.setItem('x-auth', res.headers.get('x-auth'));
     return res.json();
   });
+};
+
+const postSignup = newUser => {
+  return fetch(GS_API_BASE_URL + '/user', {
+    method: 'POST',
+    body: JSON.stringify(newUser),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+    .then(res => {
+      console.log(res.status);
+      if (res.status === 200) {
+        localStorage.setItem('x-auth', res.headers.get('x-auth'));
+        return res.json();
+      }
+      return Promise.reject();
+    })
+    .catch(err => {
+      console.log('error', err);
+      return Promise.reject();
+    });
 };
 
 const getUser = xAuth => {
@@ -47,4 +68,4 @@ const deleteLogout = xAuth => {
     });
 };
 
-export { postLogin, getUser, deleteLogout };
+export { postLogin, postSignup, getUser, deleteLogout };

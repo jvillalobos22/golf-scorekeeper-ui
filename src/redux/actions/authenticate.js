@@ -2,14 +2,18 @@ import {
   GET_USER,
   GET_USER_SUCCESS,
   GET_USER_FAILURE,
+  LOGOUT,
+  LOGOUT_SUCCESS,
+  LOGOUT_ERROR,
+  LOGOUT_ERROR_CLEAR,
   POST_LOGIN,
   POST_LOGIN_SUCCESS,
   POST_LOGIN_ERROR,
   POST_LOGIN_ERROR_CLEAR,
-  LOGOUT,
-  LOGOUT_SUCCESS,
-  LOGOUT_ERROR,
-  LOGOUT_ERROR_CLEAR
+  POST_SIGNUP,
+  POST_SIGNUP_SUCCESS,
+  POST_SIGNUP_ERROR,
+  POST_SIGNUP_ERROR_CLEAR
 } from './actionTypes';
 
 const doPostLogin = credentials => {
@@ -91,16 +95,52 @@ const doLogoutErrorClear = () => {
   };
 };
 
+const doPostSignup = newUser => {
+  return {
+    type: POST_SIGNUP,
+    payload: {
+      user: newUser
+    }
+  };
+};
+
+const doPostSignupSuccess = (user, xAuth) => {
+  return {
+    type: POST_SIGNUP_SUCCESS,
+    payload: {
+      user,
+      xAuth
+    }
+  };
+};
+
+const doPostSignupError = error => {
+  return {
+    type: POST_SIGNUP_ERROR,
+    error
+  };
+};
+
+const doPostSignupErrorClear = () => {
+  return {
+    type: POST_SIGNUP_ERROR_CLEAR
+  };
+};
+
 export {
   doGetUser,
   doGetUserSuccess,
   doGetUserFailure,
+  doLogout,
+  doLogoutSuccess,
+  doLogoutError,
+  doLogoutErrorClear,
   doPostLogin,
   doPostLoginSuccess,
   doPostLoginError,
   doPostLoginErrorClear,
-  doLogout,
-  doLogoutSuccess,
-  doLogoutError,
-  doLogoutErrorClear
+  doPostSignup,
+  doPostSignupSuccess,
+  doPostSignupError,
+  doPostSignupErrorClear
 };
