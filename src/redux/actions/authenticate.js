@@ -15,10 +15,13 @@ const doPostLogin = credentials => {
   };
 };
 
-const doPostLoginSuccess = user => {
+const doPostLoginSuccess = (user, xAuth) => {
   return {
     type: POST_LOGIN_SUCCESS,
-    payload: user
+    payload: {
+      user,
+      xAuth
+    }
   };
 };
 
@@ -41,10 +44,13 @@ const doGetUser = () => {
   };
 };
 
-const doGetUserSuccess = user => {
+const doGetUserSuccess = (user, xAuth) => {
   return {
     type: GET_USER_SUCCESS,
-    user
+    payload: {
+      user,
+      xAuth
+    }
   };
 };
 

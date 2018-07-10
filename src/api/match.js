@@ -1,7 +1,12 @@
 const GS_API_BASE_URL = 'http://localhost:8080';
 
-const fetchMatches = query =>
-  fetch(GS_API_BASE_URL + query).then(res => res.json());
+const fetchMatches = xAuth =>
+  fetch(GS_API_BASE_URL + '/matches', {
+    method: 'GET',
+    headers: {
+      'x-auth': xAuth
+    }
+  }).then(res => res.json());
 
 const postMatch = match => {
   const emptyHoles = [];

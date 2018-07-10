@@ -15,7 +15,16 @@ function* handlePostLogin(action) {
     console.log(action.payload);
     const result = yield call(postLogin, payload);
     console.log('result', result);
-    yield put(doPostLoginSuccess(result));
+    const xAuth = localStorage.getItem('x-auth');
+    yield put(doPostLoginSuccess(result, xAuth));
+    console.log('localstorage', JSON.stringify(result));
+    localStorage.setItem(
+      'authenticationState',
+      JSON.stringify({
+        loggedIn: true,
+        user: result
+      })
+    );
   } catch (error) {
     yield put(doPostLoginError(error));
   }
@@ -23,13 +32,23 @@ function* handlePostLogin(action) {
 
 function* handleGetUser() {
   try {
-    console.log(handleGetUser());
-    const result = yield call(getUser);
-    console.log('result', result);
-    if (result.user !== null) {
-      yield put(doGetUserSuccess(result.user));
-    } else {
-      yield put(doGetUserFailure());
+    console.log('handleGetUser()');
+
+    const xAuth = localStorage.getItem('x-auth') || null;
+    const authState = JSON.parse(localStorage.getItem('authenticationState'));
+    const { user, loggedIn } = authState ? authState : null;
+
+    if (user && loggedIn) {
+      console.log('user logged in from localStorage');
+      yield put(doGetUserSuccess(user, xAuth));
+    } else if (xAuth) {
+      console.log('x-auth token available, fetching user from server');
+      const result = yield call(getUser, xAuth);
+      if (result.user !== null) {
+        yield put(doGetUserSuccess(result.user, xAuth));
+      } else {
+        yield put(doGetUserFailure());
+      }
     }
   } catch (error) {
     yield put(doGetUserFailure());

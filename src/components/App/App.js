@@ -25,11 +25,11 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const { loggedIn } = this.props;
+    const { loggedIn, xAuth } = this.props;
     if (!loggedIn) {
-      console.log('no current user');
       this.props.onGetUser();
     }
+
     // if loggedIn
     //   - do nothing
     // else
@@ -38,7 +38,16 @@ class App extends Component {
     //     - set auth state
     //   else
     //     - redirect to login
-    this.props.onFetchMatches('/matches');
+    if (xAuth) {
+      this.props.onFetchMatches(xAuth);
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { xAuth } = this.props;
+    if (prevProps.xAuth !== xAuth && xAuth) {
+      this.props.onFetchMatches(xAuth);
+    }
   }
 
   setPageContainerClass = newClass => {
@@ -110,6 +119,7 @@ const mapStateToProps = state => {
   const { authenticationState } = state;
   return {
     loggedIn: authenticationState.loggedIn,
+    xAuth: authenticationState.xAuth,
     user: getLoggedInUser(state)
   };
 };

@@ -11,12 +11,19 @@ const postLogin = credentials => {
       'Content-Type': 'application/json'
     }
   }).then(res => {
+    console.log(res.headers.get('x-auth'));
+    localStorage.setItem('x-auth', res.headers.get('x-auth'));
     return res.json();
   });
 };
 
-const getUser = () => {
-  return fetch(GS_API_BASE_URL + '/user').then(res => {
+const getUser = xAuth => {
+  return fetch(GS_API_BASE_URL + '/user', {
+    method: 'GET',
+    headers: {
+      'x-auth': xAuth
+    }
+  }).then(res => {
     return res.json();
   });
 };
