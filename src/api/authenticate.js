@@ -23,19 +23,13 @@ const postSignup = newUser => {
     headers: {
       'Content-Type': 'application/json'
     }
-  })
-    .then(res => {
-      console.log(res.status);
-      if (res.status === 200) {
-        localStorage.setItem('x-auth', res.headers.get('x-auth'));
-        return res.json();
-      }
-      return Promise.reject();
-    })
-    .catch(err => {
-      console.log('error', err);
-      return Promise.reject();
-    });
+  }).then(res => {
+    if (res.status === 200) {
+      localStorage.setItem('x-auth', res.headers.get('x-auth'));
+      return res.json();
+    }
+    return Promise.reject(res.json());
+  });
 };
 
 const getUser = xAuth => {
@@ -50,8 +44,6 @@ const getUser = xAuth => {
 };
 
 const deleteLogout = xAuth => {
-  console.log('xAuth');
-  console.log(xAuth);
   return fetch(GS_API_BASE_URL + '/user/logout', {
     method: 'DELETE',
     headers: {
@@ -63,7 +55,6 @@ const deleteLogout = xAuth => {
       return Promise.reject();
     })
     .catch(err => {
-      console.log('error', err);
       return Promise.reject();
     });
 };

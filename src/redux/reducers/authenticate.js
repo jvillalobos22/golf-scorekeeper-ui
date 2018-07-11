@@ -7,7 +7,9 @@ import {
   LOGOUT_ERROR,
   LOGOUT_ERROR_CLEAR,
   GET_USER_FAILURE,
-  POST_SIGNUP_SUCCESS
+  POST_SIGNUP_SUCCESS,
+  POST_SIGNUP_ERROR,
+  POST_SIGNUP_ERROR_CLEAR
 } from '../actions/actionTypes';
 
 const INITIAL_STATE = {
@@ -18,7 +20,8 @@ const INITIAL_STATE = {
   user_display_name: '',
   login_success: false,
   login_error: '',
-  logout_error: false
+  logout_error: false,
+  signup_error: ''
 };
 
 const authenticationReducer = (state = INITIAL_STATE, action) => {
@@ -96,6 +99,19 @@ const authenticationReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         logout_error: false
+      };
+    }
+    case POST_SIGNUP_ERROR: {
+      return {
+        ...state,
+        loggedIn: false,
+        signup_error: action.error
+      };
+    }
+    case POST_SIGNUP_ERROR_CLEAR: {
+      return {
+        ...state,
+        signup_error: ''
       };
     }
     default:

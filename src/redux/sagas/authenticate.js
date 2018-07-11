@@ -21,12 +21,9 @@ function* handlePostLogin(action) {
 
   try {
     console.log('handlePostLogin()');
-    console.log(action.payload);
     const result = yield call(postLogin, payload);
-    console.log('result', result);
     const xAuth = localStorage.getItem('x-auth');
     yield put(doPostLoginSuccess(result, xAuth));
-    console.log('localstorage', JSON.stringify(result));
     localStorage.setItem(
       'authenticationState',
       JSON.stringify({
@@ -42,9 +39,7 @@ function* handlePostLogin(action) {
 function* handleSignup(action) {
   try {
     console.log('handleSignup()');
-    console.log(action.payload);
     const result = yield call(postSignup, action.payload.user);
-    console.log(result);
     const xAuth = localStorage.getItem('x-auth');
     yield put(doPostSignupSuccess(result, xAuth));
     localStorage.setItem(
@@ -54,8 +49,8 @@ function* handleSignup(action) {
         user: result
       })
     );
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    const error = yield err;
     yield put(doPostSignupError(error));
   }
 }
@@ -81,6 +76,7 @@ function* handleGetUser() {
       }
     }
   } catch (error) {
+    console.log(error);
     yield put(doGetUserFailure());
   }
 }
@@ -89,7 +85,6 @@ function* handleLogout(action) {
   try {
     console.log('handleLogout()');
     const result = yield call(deleteLogout, action.payload.xAuth);
-    console.log(result);
     yield put(doLogoutSuccess());
     localStorage.clear();
   } catch (error) {

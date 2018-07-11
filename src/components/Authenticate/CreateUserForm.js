@@ -8,6 +8,7 @@ import {
 } from '../../redux/actions/authenticate';
 import { InputField } from './LoginForm';
 import { InlineButton } from '../Button/Button';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 class CreateUserForm extends Component {
   constructor(props) {
@@ -23,8 +24,8 @@ class CreateUserForm extends Component {
   }
 
   handleChange = e => {
-    const { login_error, onErrorClear } = this.props;
-    if (login_error) onErrorClear();
+    const { signup_error, onErrorClear } = this.props;
+    if (signup_error) onErrorClear();
     this.setState({
       [e.target.name]: e.target.value.trim()
     });
@@ -79,7 +80,7 @@ class CreateUserForm extends Component {
 
   render() {
     const { username, password, confirmPassword, displayName } = this.state;
-    const { loggedIn, login_error } = this.props;
+    const { loggedIn, login_error, signup_error } = this.props;
     const formIssues = {
       validPassword: password && !this.passwordIsValid(password) ? false : true,
       passwordsMatch:
@@ -89,11 +90,21 @@ class CreateUserForm extends Component {
       validUsername: username && !this.isValidUsername(username) ? false : true
     };
 
+    let signupErrMsg;
+
+    if (signup_error && signup_error.code === 11000) {
+      signupErrMsg = 'There is already a user with that username.';
+    } else {
+      signupErrMsg =
+        'There was a problem creating your profile. Please try again.';
+    }
+
     return loggedIn ? (
       <Redirect to={`/`} />
     ) : (
       <div className="create_user_form">
         <h2 className="topheader">Create an Account</h2>
+        {signup_error && <ErrorMessage errorMsg={signupErrMsg} />}
         <form onSubmit={e => this.handleSubmit(e)}>
           <InputField
             labelText="Username"
@@ -165,19 +176,20 @@ class CreateUserForm extends Component {
   }
 }
 
+const ValidationError = ({ children }) => {
+  return <div className="validation_error">{children}</div>;
+};
+
 const mapStateToProps = state => {
   const { authenticationState } = state;
   return {
     loggedIn: authenticationState.loggedIn,
+    signup_error: authenticationState.signup_error,
     user_id: authenticationState.user_id,
     user_display_name: authenticationState.user_display_name,
     login_success: authenticationState.login_success,
     login_error: authenticationState.login_error
   };
-};
-
-const ValidationError = ({ children }) => {
-  return <div className="validation_error">{children}</div>;
 };
 
 const mapDispatchToProps = dispatch => ({
