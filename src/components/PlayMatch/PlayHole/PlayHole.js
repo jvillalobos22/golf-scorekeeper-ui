@@ -10,6 +10,7 @@ import './PlayHole.css';
 
 class PlayHole extends Component {
   setPar = newPar => {
+    console.log('newPar');
     const newHole = { ...this.props.holeScore };
     newHole.par = newPar;
     this.props.updateScore(newHole);
@@ -238,11 +239,11 @@ const PlayHoleHeader = ({ holeNumber, matchId, totalHoles, completeMatch }) => (
   </div>
 );
 
-const mapStateToProps = state => {
-  return {
-    storeInSync: state.playMatchState.storeInSync
-  };
-};
+// const mapStateToProps = state => {
+//   return {
+//     storeInSync: state.playMatchState.storeInSync
+//   };
+// };
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -251,6 +252,7 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-  mapStateToProps,
+  // mapStateToProps,
+  null,
   mapDispatchToProps
 )(PlayHole);

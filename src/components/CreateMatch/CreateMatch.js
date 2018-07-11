@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import { doMatchCreate, doMatchCreateClear } from '../../redux/actions/match';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
-import { GhostButton } from '../Button/Button';
+import Button, { GhostButton } from '../Button/Button';
 import './CreateMatch.css';
 
 class CreateMatch extends Component {
@@ -169,8 +169,16 @@ const InputField = ({ className, labelText, ...rest }) => {
 
 const CreateMatchButton = () => {
   return (
-    <Link to="/new-match">
+    <Link to="/new-match" className="create_match_btn">
       <GhostButton>+ New Match</GhostButton>
+    </Link>
+  );
+};
+
+const CreateFirstMatchButton = () => {
+  return (
+    <Link to="/new-match" className="create_match_btn">
+      <Button>Start a Round</Button>
     </Link>
   );
 };
@@ -196,4 +204,4 @@ export default connect(
 )(CreateMatch);
 
 // export default CreateMatch;
-export { CreateMatchButton, InputField };
+export { CreateMatchButton, CreateFirstMatchButton, InputField };

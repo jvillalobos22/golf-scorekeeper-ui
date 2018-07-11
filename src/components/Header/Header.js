@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { getLoggedInUser } from '../../redux/selectors/user';
 import LoginButton from '../Authenticate/LoginButton';
@@ -8,13 +9,14 @@ import UserDropdown from './UserDropdown/UserDropdown';
 import './Header.css';
 
 const Header = ({ user }) => {
-  console.log(user);
   return (
     <header className="app_header">
       <div className="pg_width">
         <div className="header_flex">
           <Link to="/" className="header_logo">
-            <h2 className="app_title">Juan's Caddy</h2>
+            <h2 className="app_title">
+              <FontAwesomeIcon icon="golf-ball" /> myCaddie
+            </h2>
           </Link>
           {user ? (
             <UserInfo user={user} />

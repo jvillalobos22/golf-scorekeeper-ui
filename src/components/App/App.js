@@ -7,8 +7,8 @@ import Header from '../Header/Header';
 import Matches from '../Matches/Matches';
 import MatchDetail from '../MatchDetail/MatchDetail';
 import CreateMatch from '../CreateMatch/CreateMatch';
-import PlayMatch from '../PlayMatch/PlayMatch';
 import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
+import ProtectedPlayMatchRoute from './ProtectedRoute/ProtectedPlayMatchRoute';
 import { doFetchMatches } from '../../redux/actions/match';
 import { doGetUser } from '../../redux/actions/authenticate';
 import './App.css';
@@ -30,15 +30,6 @@ class App extends Component {
     if (!loggedIn) {
       this.props.onGetUser();
     }
-
-    // if loggedIn
-    //   - do nothing
-    // else
-    //   - see if user is saved in session
-    //   if yes
-    //     - set auth state
-    //   else
-    //     - redirect to login
     if (xAuth) {
       this.props.onFetchMatches(xAuth);
     }
@@ -98,9 +89,9 @@ class App extends Component {
               }}
             />
             <ProtectedRoute path="/new-match" component={CreateMatch} />
-            <ProtectedRoute
+            {/* <Route
               path="/play/:matchId/hole/:holeNumber"
-              component={({ match }) => {
+              render={({ match }) => {
                 return (
                   <PlayMatch
                     matchId={match.params.matchId}
@@ -108,7 +99,8 @@ class App extends Component {
                   />
                 );
               }}
-            />
+            /> */}
+            <ProtectedPlayMatchRoute />
             <ProtectedRoute component={RouteNotFound} />
           </Switch>
         </div>

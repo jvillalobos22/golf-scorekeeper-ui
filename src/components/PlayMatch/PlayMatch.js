@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { matchesSelector } from '../../redux/selectors/match';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
+import StoreInSyncMsg from './StoreInSyncMsg';
 import {
   SuccessNotification,
   WarningNotification
@@ -29,7 +30,6 @@ class PlayMatch extends Component {
   }
 
   componentDidMount() {
-    console.log('Mounting');
     const { matches, matchId } = this.props;
     const thisMatch = this.getThisMatch(matches, matchId);
     if (thisMatch) {
@@ -50,10 +50,19 @@ class PlayMatch extends Component {
       }
       return hole;
     });
-    this.props.onSyncUpdate(false);
-    this.setState({
-      scores: newScores
-    });
+
+    this.setState(
+      {
+        scores: newScores
+      },
+      this.storeOutOfSync
+    );
+  };
+
+  storeOutOfSync = () => {
+    if (this.props.storeInSync) {
+      this.props.onSyncUpdate(false);
+    }
   };
 
   postScoreUpdate = matchId => {
@@ -63,16 +72,18 @@ class PlayMatch extends Component {
   };
 
   componentDidUpdate(prevProps) {
-    console.log('receiving new props');
     if (prevProps.holeNumber !== this.props.holeNumber) {
       this.props.onClearSuccessMessage();
     }
     const oldMatch = this.getThisMatch(prevProps.matches, prevProps.matchId);
     const newMatch = this.getThisMatch(this.props.matches, this.props.matchId);
+
     if (!oldMatch || oldMatch.course.holes !== newMatch.course.holes) {
-      this.setState({
-        scores: newMatch.holes
-      });
+      if (newMatch) {
+        this.setState({
+          scores: newMatch.holes
+        });
+      }
     }
   }
 
@@ -85,18 +96,14 @@ class PlayMatch extends Component {
       updateScoreError,
       updateScoreSuccess
     } = this.props;
+    console.log('PlayMatch rendered');
     const thisMatch = this.getThisMatch(matches, matchId);
     return (
       <div>
         <div className="pg_width">
           {thisMatch ? (
             <div className="play_match">
-              {!storeInSync && (
-                <WarningNotification>
-                  Score's have not been saved yet. Make sure to click&nbsp;
-                  <strong>Save Hole</strong> to save changes to the database.
-                </WarningNotification>
-              )}
+              <StoreInSyncMsg />
               {updateScoreSuccess && (
                 <SuccessNotification className="update_success">
                   Score's have been successfully updated.

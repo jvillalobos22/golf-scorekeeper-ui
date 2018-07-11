@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
 
 const ProtectedRoute = ({ component: Component, ...rest, loggedIn, xAuth, redirectToLogin }) => {
-  // Add your own authentication on the below line.
   return (
     <Route
       {...rest}

@@ -13,6 +13,7 @@ import {
   faCaretUp,
   faCheck,
   faExclamation,
+  faGolfBall,
   faWindowClose
 } from '@fortawesome/fontawesome-free-solid';
 
@@ -22,6 +23,9 @@ import App from './components/App/App';
 import registerServiceWorker from './registerServiceWorker';
 
 fontawesome.library.add(
+  faArrowLeft,
+  faArrowRight,
+  faArrowUp,
   faPencilAlt,
   faCaretLeft,
   faCaretRight,
@@ -29,6 +33,7 @@ fontawesome.library.add(
   faCaretUp,
   faCheck,
   faExclamation,
+  faGolfBall,
   faWindowClose
 );
 
