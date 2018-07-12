@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Select from 'react-select';
 import { doSyncUpdate } from '../../../redux/actions/playMatch';
+import StoreInSyncMsg from '../StoreInSyncMsg';
+import UpdateSuccessMsg from '../UpdateSuccessMsg';
 
 import HoleSummary from './HoleSummary/HoleSummary';
 import Button, {
@@ -95,6 +97,8 @@ class PlayHole extends Component {
             />
           </div>
         )}
+        <UpdateSuccessMsg />
+        <StoreInSyncMsg />
         {(holeScore.score === 0 || editScore) && (
           <form className="hole_form" onSubmit={e => this.handleFormSubmit(e)}>
             <h2>Edit Hole</h2>

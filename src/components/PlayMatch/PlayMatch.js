@@ -17,6 +17,7 @@ import {
 } from '../../redux/actions/playMatch';
 
 import './PlayMatch.css';
+import UpdateSuccessMsg from './UpdateSuccessMsg';
 
 class PlayMatch extends Component {
   constructor(props) {
@@ -96,25 +97,14 @@ class PlayMatch extends Component {
       updateScoreError,
       updateScoreSuccess
     } = this.props;
-    console.log('PlayMatch rendered');
+
     const thisMatch = this.getThisMatch(matches, matchId);
+
     return (
       <div>
         <div className="pg_width">
           {thisMatch ? (
             <div className="play_match">
-              <StoreInSyncMsg />
-              {updateScoreSuccess && (
-                <SuccessNotification className="update_success">
-                  Score's have been successfully updated.
-                  <button
-                    type="button"
-                    onClick={() => this.props.onClearSuccessMessage()}
-                  >
-                    <FontAwesomeIcon icon="window-close" />
-                  </button>
-                </SuccessNotification>
-              )}
               {updateScoreError && (
                 <div className="connection_error">
                   <ErrorMessage errorMsg="There was an issue saving to the database. It may be due to a poor connection. Continue playing and try to save your scores again later. CAUTION: Refreshing your page may wipe out any scores that have not been saved." />
