@@ -141,14 +141,16 @@ class CreateMatch extends Component {
                   required
                   onChange={this.holeSelectChange}
                   options={[
+                    { value: 6, label: '6 Holes' },
                     { value: 9, label: '9 Holes' },
                     { value: 18, label: '18 Holes' },
-                    { value: 27, label: '27 Holes' }
+                    { value: 27, label: '27 Holes' },
+                    { value: 36, label: '36 Holes' }
                   ]}
                 />
               </div>
               <div className="submit_container">
-                <input type="submit" value="Start Match" className="button" />
+                <input type="submit" value="Start Round" className="button" />
               </div>
             </div>
           </form>
@@ -170,7 +172,7 @@ const InputField = ({ className, labelText, ...rest }) => {
 const CreateMatchButton = () => {
   return (
     <Link to="/new-match" className="create_match_btn">
-      <GhostButton>+ New Match</GhostButton>
+      <GhostButton>+ New Round</GhostButton>
     </Link>
   );
 };

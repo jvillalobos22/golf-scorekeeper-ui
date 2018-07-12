@@ -10,7 +10,6 @@ import './PlayHole.css';
 
 class PlayHole extends Component {
   setPar = newPar => {
-    console.log('newPar');
     const newHole = { ...this.props.holeScore };
     newHole.par = newPar;
     this.props.updateScore(newHole);
