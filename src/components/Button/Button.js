@@ -1,4 +1,5 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './Button.css';
 
 const Button = ({ children, onClick, className }) => {
@@ -43,5 +44,29 @@ const CloseButton = ({ className, ...rest }) => {
   return <Button className={derivedClass} {...rest} />;
 };
 
+const TogglePaneButton = ({ isOpen, onToggle }) => (
+  <div className="toggle_pane_btn">
+    {!isOpen ? (
+      <Button onClick={() => onToggle()}>
+        <span>
+          <FontAwesomeIcon icon="pencil-alt" /> Edit Hole
+        </span>
+      </Button>
+    ) : (
+      <CloseButton onClick={() => onToggle()}>
+        <span>
+          <FontAwesomeIcon icon="times" /> Close Edit Screen
+        </span>
+      </CloseButton>
+    )}
+  </div>
+);
+
 export default Button;
-export { GhostButton, InlineButton, SmallButton, CloseButton };
+export {
+  GhostButton,
+  InlineButton,
+  SmallButton,
+  CloseButton,
+  TogglePaneButton
+};

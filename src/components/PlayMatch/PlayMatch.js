@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { matchesSelector } from '../../redux/selectors/match';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
-import StoreInSyncMsg from './StoreInSyncMsg';
-import {
-  SuccessNotification,
-  WarningNotification
-} from '../Notification/Notification';
+
 import PlayHole from './PlayHole/PlayHole';
 import {
   doSyncUpdate,
@@ -17,7 +12,6 @@ import {
 } from '../../redux/actions/playMatch';
 
 import './PlayMatch.css';
-import UpdateSuccessMsg from './UpdateSuccessMsg';
 
 class PlayMatch extends Component {
   constructor(props) {
@@ -89,14 +83,7 @@ class PlayMatch extends Component {
   }
 
   render() {
-    const {
-      matches,
-      matchId,
-      holeNumber,
-      storeInSync,
-      updateScoreError,
-      updateScoreSuccess
-    } = this.props;
+    const { matches, matchId, holeNumber } = this.props;
 
     const thisMatch = this.getThisMatch(matches, matchId);
 
@@ -105,17 +92,6 @@ class PlayMatch extends Component {
         <div className="pg_width">
           {thisMatch ? (
             <div className="play_match">
-              {updateScoreError && (
-                <div className="connection_error">
-                  <ErrorMessage errorMsg="There was an issue saving to the database. It may be due to a poor connection. Continue playing and try to save your scores again later. CAUTION: Refreshing your page may wipe out any scores that have not been saved." />
-                  <button
-                    type="button"
-                    onClick={() => this.props.onClearError()}
-                  >
-                    <FontAwesomeIcon icon="window-close" />
-                  </button>
-                </div>
-              )}
               <PlayHole
                 holeNumber={holeNumber}
                 match={thisMatch}
@@ -139,8 +115,6 @@ const mapStateToProps = state => {
   return {
     matches: matchesSelector(state),
     storeInSync: state.playMatchState.storeInSync,
-    updateScoreError: state.playMatchState.updateScoreError,
-    updateScoreSuccess: state.playMatchState.updateScoreSuccess,
     xAuth: state.authenticationState.xAuth
   };
 };

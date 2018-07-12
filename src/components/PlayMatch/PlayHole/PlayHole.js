@@ -6,33 +6,13 @@ import Select from 'react-select';
 import { doSyncUpdate } from '../../../redux/actions/playMatch';
 import StoreInSyncMsg from '../StoreInSyncMsg';
 import UpdateSuccessMsg from '../UpdateSuccessMsg';
+import UpdateScoreErrorMsg from '../UpdateScoreErrorMsg';
 
 import HoleSummary from './HoleSummary/HoleSummary';
-import Button, {
-  GhostButton,
-  InlineButton,
-  CloseButton
-} from '../../Button/Button';
+import Button, { GhostButton, CloseButton } from '../../Button/Button';
 import './PlayHole.css';
 
 class PlayHole extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      editScore: false
-    };
-
-    this.toggleEditScore = this.toggleEditScore.bind(this);
-  }
-
-  toggleEditScore = () => {
-    this.setState((prevState, props) => {
-      return {
-        editScore: !prevState.editScore
-      };
-    });
-  };
-
   setPar = newPar => {
     const newHole = { ...this.props.holeScore };
     newHole.par = newPar;
@@ -72,7 +52,6 @@ class PlayHole extends Component {
   };
 
   render() {
-    const { editScore } = this.state;
     const { holeNumber, match, holeScore } = this.props;
     return holeScore ? (
       <div className="play_hole">
@@ -91,97 +70,75 @@ class PlayHole extends Component {
         {holeScore.score > 0 && (
           <div>
             <HoleSummary holeScore={holeScore} />
-            <EditHoleButton
-              isOpen={editScore}
-              onToggle={this.toggleEditScore}
-            />
           </div>
         )}
+        <UpdateScoreErrorMsg />
         <UpdateSuccessMsg />
         <StoreInSyncMsg />
-        {(holeScore.score === 0 || editScore) && (
-          <form className="hole_form" onSubmit={e => this.handleFormSubmit(e)}>
-            <h2>Edit Hole</h2>
-            <label>Par</label>
-            <ParSelect
-              setPar={par => this.setPar(par)}
-              value={holeScore.par}
-              className="some-class"
+        <form className="hole_form" onSubmit={e => this.handleFormSubmit(e)}>
+          <h2>Edit Hole</h2>
+          <ParSelect
+            setPar={par => this.setPar(par)}
+            value={holeScore.par}
+            className="some-class"
+          />
+          <TeeDirectionSelect
+            setTeeDirection={dir => this.setTeeDirection(dir)}
+            value={holeScore.teeDirection}
+          />
+          <ScoreSelect
+            name="score"
+            value={holeScore.score}
+            onChange={this.scoreUpdate}
+            par={holeScore.par}
+          />
+          <div className="input_field">
+            <label>Number of Putts</label>
+            <Select
+              name="putts"
+              value={holeScore.putts}
+              clearable={true}
+              onChange={this.puttsUpdate}
+              options={[
+                { value: 1, label: '1' },
+                { value: 2, label: '2' },
+                { value: 3, label: '3' },
+                { value: 4, label: '4' },
+                { value: 5, label: '5' },
+                { value: 6, label: '6' },
+                { value: 7, label: '7' },
+                { value: 8, label: '8' },
+                { value: 9, label: '9' },
+                { value: 10, label: '10' }
+              ]}
             />
-            <label>Tee Direction</label>
-            <TeeSelect
-              setTeeDirection={dir => this.setTeeDirection(dir)}
-              value={holeScore.teeDirection}
+          </div>
+          <div className="input_field">
+            <label>Mulligans</label>
+            <Select
+              name="score"
+              value={holeScore.mulligans}
+              clearable={true}
+              onChange={this.mulligansUpdate}
+              options={[
+                { value: 0, label: '0' },
+                { value: 1, label: '1' },
+                { value: 2, label: '2' },
+                { value: 3, label: '3' },
+                { value: 4, label: '4' },
+                { value: 5, label: '5' },
+                { value: 6, label: '6' },
+                { value: 7, label: '7' },
+                { value: 8, label: '8' },
+                { value: 9, label: '9' },
+                { value: 10, label: '10' }
+              ]}
             />
-            <div className="input_field">
-              <label>Score</label>
-              <Select
-                name="score"
-                value={holeScore.score}
-                clearable={true}
-                onChange={this.scoreUpdate}
-                options={[
-                  { value: 1, label: '1 - Hole In One!' },
-                  { value: 2, label: '2' },
-                  { value: 3, label: '3' },
-                  { value: 4, label: '4' },
-                  { value: 5, label: '5' },
-                  { value: 6, label: '6' },
-                  { value: 7, label: '7' },
-                  { value: 8, label: '8' },
-                  { value: 9, label: '9' },
-                  { value: 10, label: '10' }
-                ]}
-              />
-            </div>
-            <div className="input_field">
-              <label>Number of Putts</label>
-              <Select
-                name="score"
-                value={holeScore.putts}
-                clearable={true}
-                onChange={this.puttsUpdate}
-                options={[
-                  { value: 1, label: '1' },
-                  { value: 2, label: '2' },
-                  { value: 3, label: '3' },
-                  { value: 4, label: '4' },
-                  { value: 5, label: '5' },
-                  { value: 6, label: '6' },
-                  { value: 7, label: '7' },
-                  { value: 8, label: '8' },
-                  { value: 9, label: '9' },
-                  { value: 10, label: '10' }
-                ]}
-              />
-            </div>
-            <div className="input_field">
-              <label>Mulligans</label>
-              <Select
-                name="score"
-                value={holeScore.mulligans}
-                clearable={true}
-                onChange={this.mulligansUpdate}
-                options={[
-                  { value: 0, label: '0' },
-                  { value: 1, label: '1' },
-                  { value: 2, label: '2' },
-                  { value: 3, label: '3' },
-                  { value: 4, label: '4' },
-                  { value: 5, label: '5' },
-                  { value: 6, label: '6' },
-                  { value: 7, label: '7' },
-                  { value: 8, label: '8' },
-                  { value: 9, label: '9' },
-                  { value: 10, label: '10' }
-                ]}
-              />
-            </div>
-            <div className="input_fields">
-              <input className="button" type="submit" value="Save Hole" />
-            </div>
-          </form>
-        )}
+          </div>
+          <div className="input_fields">
+            <input className="button" type="submit" value="Save Hole" />
+          </div>
+        </form>
         <div className="edit_footer">
           <NavigateHolesButtons
             holeNumber={holeNumber}
@@ -197,8 +154,79 @@ class PlayHole extends Component {
   }
 }
 
+const ScoreSelect = ({ name, value, onChange, par }) => {
+  const getScoreOptions = (par, value) => {
+    console.log(par);
+    const parValue = Number(par);
+    if (parValue === 3) {
+      return [
+        { value: 1, label: '1 - Hole In One!' },
+        { value: 2, label: '2 - Birdie' },
+        { value: 3, label: '3 - Par' },
+        { value: 4, label: '4 - Bogey' },
+        { value: 5, label: '5 - Double Bogey' },
+        { value: 6, label: '6 - Triple Bogey' },
+        { value: 7, label: '7 - +4 Bogey' },
+        { value: 8, label: '8 - +5 Bogey' }
+      ];
+    } else if (parValue === 4) {
+      return [
+        { value: 1, label: '1 - Hole In One!' },
+        { value: 2, label: '2 - Eagle' },
+        { value: 3, label: '3 - Birdie' },
+        { value: 4, label: '4 - Par' },
+        { value: 5, label: '5 - Bogey' },
+        { value: 6, label: '6 - Double Bogey' },
+        { value: 7, label: '7 - Triple Bogey' },
+        { value: 8, label: '8 - +4 Bogey' },
+        { value: 9, label: '9 - +5 Bogey' }
+      ];
+    } else if (parValue === 5) {
+      return [
+        { value: 1, label: '1 - Hole In One!' },
+        { value: 2, label: '2 - Albatross' },
+        { value: 3, label: '3 - Eagle' },
+        { value: 4, label: '4 - Birdie' },
+        { value: 5, label: '5 - Par' },
+        { value: 6, label: '6 - Bogey' },
+        { value: 7, label: '7 - Double Bogey' },
+        { value: 8, label: '8 - Triple Bogey' },
+        { value: 9, label: '9 - +4 Bogey' },
+        { value: 10, label: '10 - +5 Bogey' }
+      ];
+    } else {
+      return [
+        { value: 1, label: '1 - Hole In One!' },
+        { value: 2, label: '2' },
+        { value: 3, label: '3' },
+        { value: 4, label: '4' },
+        { value: 5, label: '5' },
+        { value: 6, label: '6' },
+        { value: 7, label: '7' },
+        { value: 8, label: '8' },
+        { value: 9, label: '9' },
+        { value: 10, label: '10' }
+      ];
+    }
+  };
+
+  return (
+    <div className="input_field">
+      <label>Score</label>
+      <Select
+        name={name}
+        value={value}
+        clearable={true}
+        onChange={onChange}
+        options={getScoreOptions(par, value)}
+      />
+    </div>
+  );
+};
+
 const ParSelect = ({ setPar, className, value }) => (
   <div className={className ? `par_buttons ${className}` : 'par_buttons'}>
+    <label>Par</label>
     <button
       type="button"
       className={value === 3 ? 'selected' : ''}
@@ -223,26 +251,9 @@ const ParSelect = ({ setPar, className, value }) => (
   </div>
 );
 
-const EditHoleButton = ({ isOpen, onToggle }) => (
-  <div className="edit_hole_button">
-    {!isOpen ? (
-      <Button onClick={() => onToggle()}>
-        <span>
-          <FontAwesomeIcon icon="pencil-alt" /> Edit Hole
-        </span>
-      </Button>
-    ) : (
-      <CloseButton onClick={() => onToggle()}>
-        <span>
-          <FontAwesomeIcon icon="times" /> Close Edit Screen
-        </span>
-      </CloseButton>
-    )}
-  </div>
-);
-
-const TeeSelect = ({ setTeeDirection, className, value }) => (
+const TeeDirectionSelect = ({ setTeeDirection, className, value }) => (
   <div className={className ? `tee_direction ${className}` : 'tee_direction'}>
+    <label>Tee Direction</label>
     <button
       type="button"
       className={value === 'LEFT' ? 'selected' : ''}
