@@ -38,5 +38,10 @@ const SmallButton = ({ className, ...rest }) => {
   return <Button className={derivedClass} {...rest} />;
 };
 
+const CloseButton = ({ className, ...rest }) => {
+  const derivedClass = className ? `small_button ${className}` : 'close_button';
+  return <Button className={derivedClass} {...rest} />;
+};
+
 export default Button;
-export { GhostButton, InlineButton, SmallButton };
+export { GhostButton, InlineButton, SmallButton, CloseButton };

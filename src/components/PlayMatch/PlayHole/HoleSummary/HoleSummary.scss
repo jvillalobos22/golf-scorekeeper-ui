@@ -1,0 +1,282 @@
+// Result Colors
+$gold: #ffc107;
+$indigo: #3f51b5;
+$medium_blue: #2196f3;
+$light_blue: #4fc3f7;
+$yellow: #fbc02d;
+$orange: #ff9800;
+$dark_red: #d50000;
+$primary_color: #799f0c;
+$light_green: #f1f8e9;
+$secondary_color: #acbb78;
+$light_red: #ffebee;
+$gray: #e3e3e3;
+$dark_gray: #919191;
+
+// Hole Summary
+.hole_summary {
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid $gray;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+
+  h3 {
+    font-weight: 300;
+  }
+
+  .result {
+    // position: absolute;
+    // top: 0;
+    // right: 0;
+    margin-left: auto;
+    margin-bottom: auto;
+    height: auto;
+    border: 1px solid $gray;
+    display: inline-block;
+    padding: 0.25rem;
+    text-align: center;
+    width: auto;
+    min-width: 140px;
+    span {
+      display: block;
+    }
+
+    span.label {
+      color: $dark_gray;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+    }
+
+    div.score_result {
+      font-size: 1.5rem;
+      font-weight: 500;
+      margin: 0.5rem auto;
+      width: 80px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    span.single_line,
+    span.double_line,
+    span.triple_line {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    span.single_line {
+      width: 50px;
+      height: 50px;
+    }
+    span.double_line {
+      width: 60px;
+      height: 60px;
+    }
+    span.triple_line {
+      width: 70px;
+      height: 70px;
+    }
+
+    &.hole_in_one,
+    &.albatross,
+    &.eagle,
+    &.birdie {
+      span.single_line {
+        border-radius: 25px;
+      }
+      span.double_line {
+        border-radius: 30px;
+      }
+      span.triple_line {
+        border-radius: 35px;
+      }
+    }
+
+    &.hole_in_one,
+    &.albatross {
+      // Darkest Blue
+      color: $indigo;
+      span.single_line,
+      span.double_line,
+      span.triple_line {
+        border: 2px solid $indigo;
+      }
+    }
+
+    &.eagle,
+    &.double_bogey {
+      div.score_result {
+        height: 60px;
+        width: 60px;
+      }
+    }
+
+    &.birdie,
+    &.bogey {
+      div.score_result {
+        height: 50px;
+        width: 50px;
+      }
+    }
+
+    &.eagle {
+      // Medium Blue
+      color: $medium_blue;
+      span.single_line,
+      span.double_line {
+        border: 2px solid $medium_blue;
+      }
+    }
+    &.birdie {
+      // Light Blue
+      color: $light_blue;
+      span.single_line {
+        border: 2px solid $light_blue;
+      }
+    }
+    &.par {
+      // Gray
+      color: $primary_color;
+      div.score_result {
+        height: 40px;
+        width: 40px;
+      }
+    }
+    &.bogey {
+      // Yellow
+      color: $yellow;
+      span.single_line {
+        border: 2px solid $yellow;
+      }
+    }
+    &.double_bogey {
+      // Orange
+      color: $orange;
+      span.single_line,
+      span.double_line {
+        border: 2px solid $orange;
+      }
+    }
+    &.triple_bogey,
+    &.max_bogey {
+      // Red
+      color: $dark_red;
+      span.single_line,
+      span.double_line,
+      span.triple_line {
+        border: 2px solid $dark_red;
+      }
+    }
+  }
+}
+
+.stroke_performance {
+  .stat {
+    font-weight: 300;
+    font-size: 0.875em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+
+    background-color: $dark_gray;
+    border: 1px solid $dark_gray;
+    color: #fff;
+
+    .label {
+      padding: 0.25em;
+      display: block;
+    }
+    .value {
+      display: block;
+      font-size: 1.25em;
+      color: $primary_color;
+      background: #fff;
+      padding: 0.5rem;
+    }
+  }
+}
+
+.accuracy_performance {
+  margin-left: 2rem;
+
+  .tee_direction,
+  .gir {
+    margin: 0 0 1rem 0;
+    font-weight: 300;
+    font-size: 1rem;
+    text-transform: uppercase;
+    color: $dark_gray;
+    display: flex;
+    align-items: center;
+  }
+  .tee_direction_icon,
+  .gir_icon {
+    display: inline-block;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+
+    & > div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.25rem 0.75rem;
+    }
+    span {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      margin-left: 0.5rem;
+    }
+
+    svg {
+      font-size: 1rem;
+    }
+  }
+
+  .fairway_hit {
+    background-color: $light_green;
+    border: 1px solid $primary_color;
+    svg,
+    span {
+      color: $primary_color;
+    }
+  }
+
+  .fairway_miss {
+    background-color: $light_red;
+    border: 1px solid $dark_red;
+    svg,
+    span {
+      color: $dark_red;
+    }
+  }
+}
+
+@media screen and (max-width: 580px) {
+  .hole_summary {
+    .result {
+      order: 3;
+    }
+    .accuracy_performance {
+      order: 2;
+      margin-left: 0;
+    }
+    .stroke_performance {
+      width: 100%;
+      order: 1;
+      margin-right: auto;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+
+      span {
+        min-width: 100px;
+      }
+    }
+  }
+}

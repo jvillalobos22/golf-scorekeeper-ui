@@ -1,4 +1,16 @@
 $primary_color: #799f0c;
+$gold: #ffc107;
+$indigo: #3f51b5;
+$medium_blue: #2196f3;
+$light_blue: #4fc3f7;
+$yellow: #fbc02d;
+$orange: #ff9800;
+$dark_red: #d50000;
+$light_green: #f1f8e9;
+$secondary_color: #acbb78;
+$light_red: #ffebee;
+$gray: #e3e3e3;
+$dark_gray: #919191;
 
 .button {
   display: block;
@@ -30,6 +42,18 @@ $primary_color: #799f0c;
     border: 1px solid $primary_color;
     color: #fff;
     transition: background-color 1.5s ease, border 1s ease, color 0.75s ease;
+  }
+}
+
+.button.close_button {
+  background-color: #fff;
+  color: $dark_red;
+  border: 1px solid $dark_red;
+
+  &:hover,
+  &:focus {
+    background-color: $light_red;
+    transition: background-color 1.5s ease;
   }
 }
 

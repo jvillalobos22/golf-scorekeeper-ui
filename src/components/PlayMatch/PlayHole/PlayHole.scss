@@ -1,8 +1,12 @@
 $primary_color: #799f0c;
+$light_green: #f1f8e9;
 $secondary_color: #acbb78;
+$light_red: #ffebee;
 $gray: #e3e3e3;
+$dark_gray: #919191;
+$charcoal: #6d6d6d;
 
-.play_hole_btns {
+.navigate_hole_btns {
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -13,6 +17,10 @@ $gray: #e3e3e3;
     &:active {
       outline: 0;
     }
+  }
+
+  &.first_hole {
+    justify-content: flex-end;
   }
 }
 
@@ -47,6 +55,7 @@ $gray: #e3e3e3;
 }
 
 .tee_direction {
+  margin-bottom: 1rem;
   button {
     span {
       font-size: 0.8375rem;
@@ -98,5 +107,42 @@ $gray: #e3e3e3;
     font-size: 0.875rem;
     border: 1px solid #222;
     padding: 0.5rem 0.75rem;
+  }
+}
+
+.edit_hole_button {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.edit_footer {
+  display: block;
+  border-top: 2px solid $gray;
+  padding-top: 1rem;
+  margin-top: 1.25rem;
+}
+
+.hole_form {
+  padding: 1rem;
+  margin-top: 1rem;
+  background: #fff;
+  box-shadow: 1px 2px 12px rgba(0, 0, 0, 0.2);
+
+  h2 {
+    font-size: 1.75rem;
+    font-weight: 300;
+    color: $charcoal;
+    margin-bottom: 1rem;
+    position: relative;
+
+    &:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 60px;
+      height: 3px;
+      background: $charcoal;
+    }
   }
 }

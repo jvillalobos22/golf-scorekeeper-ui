@@ -5,10 +5,32 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Select from 'react-select';
 import { doSyncUpdate } from '../../../redux/actions/playMatch';
 
-import Button, { GhostButton } from '../../Button/Button';
+import HoleSummary from './HoleSummary/HoleSummary';
+import Button, {
+  GhostButton,
+  InlineButton,
+  CloseButton
+} from '../../Button/Button';
 import './PlayHole.css';
 
 class PlayHole extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      editScore: false
+    };
+
+    this.toggleEditScore = this.toggleEditScore.bind(this);
+  }
+
+  toggleEditScore = () => {
+    this.setState((prevState, props) => {
+      return {
+        editScore: !prevState.editScore
+      };
+    });
+  };
+
   setPar = newPar => {
     const newHole = { ...this.props.holeScore };
     newHole.par = newPar;
@@ -48,10 +70,11 @@ class PlayHole extends Component {
   };
 
   render() {
+    const { editScore } = this.state;
     const { holeNumber, match, holeScore } = this.props;
     return holeScore ? (
       <div className="play_hole">
-        <PlayHoleHeader
+        <NavigateHolesButtons
           holeNumber={holeNumber}
           matchId={match._id}
           totalHoles={match.course.holes}
@@ -63,95 +86,105 @@ class PlayHole extends Component {
             <span>See Match Scorecard</span>
           </Link>
         </div>
-        <form onSubmit={e => this.handleFormSubmit(e)}>
-          <label>Par</label>
-          <ParSelect
-            setPar={par => this.setPar(par)}
-            value={holeScore.par}
-            className="some-class"
+        {holeScore.score > 0 && (
+          <div>
+            <HoleSummary holeScore={holeScore} />
+            <EditHoleButton
+              isOpen={editScore}
+              onToggle={this.toggleEditScore}
+            />
+          </div>
+        )}
+        {(holeScore.score === 0 || editScore) && (
+          <form className="hole_form" onSubmit={e => this.handleFormSubmit(e)}>
+            <h2>Edit Hole</h2>
+            <label>Par</label>
+            <ParSelect
+              setPar={par => this.setPar(par)}
+              value={holeScore.par}
+              className="some-class"
+            />
+            <label>Tee Direction</label>
+            <TeeSelect
+              setTeeDirection={dir => this.setTeeDirection(dir)}
+              value={holeScore.teeDirection}
+            />
+            <div className="input_field">
+              <label>Score</label>
+              <Select
+                name="score"
+                value={holeScore.score}
+                clearable={true}
+                onChange={this.scoreUpdate}
+                options={[
+                  { value: 1, label: '1 - Hole In One!' },
+                  { value: 2, label: '2' },
+                  { value: 3, label: '3' },
+                  { value: 4, label: '4' },
+                  { value: 5, label: '5' },
+                  { value: 6, label: '6' },
+                  { value: 7, label: '7' },
+                  { value: 8, label: '8' },
+                  { value: 9, label: '9' },
+                  { value: 10, label: '10' }
+                ]}
+              />
+            </div>
+            <div className="input_field">
+              <label>Number of Putts</label>
+              <Select
+                name="score"
+                value={holeScore.putts}
+                clearable={true}
+                onChange={this.puttsUpdate}
+                options={[
+                  { value: 1, label: '1' },
+                  { value: 2, label: '2' },
+                  { value: 3, label: '3' },
+                  { value: 4, label: '4' },
+                  { value: 5, label: '5' },
+                  { value: 6, label: '6' },
+                  { value: 7, label: '7' },
+                  { value: 8, label: '8' },
+                  { value: 9, label: '9' },
+                  { value: 10, label: '10' }
+                ]}
+              />
+            </div>
+            <div className="input_field">
+              <label>Mulligans</label>
+              <Select
+                name="score"
+                value={holeScore.mulligans}
+                clearable={true}
+                onChange={this.mulligansUpdate}
+                options={[
+                  { value: 0, label: '0' },
+                  { value: 1, label: '1' },
+                  { value: 2, label: '2' },
+                  { value: 3, label: '3' },
+                  { value: 4, label: '4' },
+                  { value: 5, label: '5' },
+                  { value: 6, label: '6' },
+                  { value: 7, label: '7' },
+                  { value: 8, label: '8' },
+                  { value: 9, label: '9' },
+                  { value: 10, label: '10' }
+                ]}
+              />
+            </div>
+            <div className="input_fields">
+              <input className="button" type="submit" value="Save Hole" />
+            </div>
+          </form>
+        )}
+        <div className="edit_footer">
+          <NavigateHolesButtons
+            holeNumber={holeNumber}
+            matchId={match._id}
+            totalHoles={match.course.holes}
+            completeMatch={() => console.log('Finished Match')}
           />
-          <label>Tee Direction</label>
-          <TeeSelect
-            setTeeDirection={dir => this.setTeeDirection(dir)}
-            value={holeScore.teeDirection}
-          />
-          <div className="input_field">
-            <label>Score</label>
-            <Select
-              name="score"
-              value={holeScore.score}
-              clearable={true}
-              onChange={this.scoreUpdate}
-              options={[
-                { value: 1, label: '1 - Hole In One!' },
-                { value: 2, label: '2' },
-                { value: 3, label: '3' },
-                { value: 4, label: '4' },
-                { value: 5, label: '5' },
-                { value: 6, label: '6' },
-                { value: 7, label: '7' },
-                { value: 8, label: '8' },
-                { value: 9, label: '9' },
-                { value: 10, label: '10' }
-              ]}
-            />
-          </div>
-          <div className="input_field">
-            <label>Number of Putts</label>
-            <Select
-              name="score"
-              value={holeScore.putts}
-              clearable={true}
-              onChange={this.puttsUpdate}
-              options={[
-                { value: 1, label: '1' },
-                { value: 2, label: '2' },
-                { value: 3, label: '3' },
-                { value: 4, label: '4' },
-                { value: 5, label: '5' },
-                { value: 6, label: '6' },
-                { value: 7, label: '7' },
-                { value: 8, label: '8' },
-                { value: 9, label: '9' },
-                { value: 10, label: '10' }
-              ]}
-            />
-          </div>
-          <div className="input_field">
-            <label>Mulligans</label>
-            <Select
-              name="score"
-              value={holeScore.mulligans}
-              clearable={true}
-              onChange={this.mulligansUpdate}
-              options={[
-                { value: 0, label: '0' },
-                { value: 1, label: '1' },
-                { value: 2, label: '2' },
-                { value: 3, label: '3' },
-                { value: 4, label: '4' },
-                { value: 5, label: '5' },
-                { value: 6, label: '6' },
-                { value: 7, label: '7' },
-                { value: 8, label: '8' },
-                { value: 9, label: '9' },
-                { value: 10, label: '10' }
-              ]}
-            />
-          </div>
-          <div className="input_fields">
-            <input className="button" type="submit" value="Save Hole" />
-          </div>
-        </form>
-        <div>
-          <span className="">
-            <strong>Score: </strong>
-            {match.holes[holeNumber - 1].score}
-          </span>
-          <span className="">
-            <strong>Par: </strong>
-            {match.holes[holeNumber - 1].par}
-          </span>
         </div>
       </div>
     ) : (
@@ -186,6 +219,24 @@ const ParSelect = ({ setPar, className, value }) => (
   </div>
 );
 
+const EditHoleButton = ({ isOpen, onToggle }) => (
+  <div className="edit_hole_button">
+    {!isOpen ? (
+      <Button onClick={() => onToggle()}>
+        <span>
+          <FontAwesomeIcon icon="pencil-alt" /> Edit Hole
+        </span>
+      </Button>
+    ) : (
+      <CloseButton onClick={() => onToggle()}>
+        <span>
+          <FontAwesomeIcon icon="times" /> Close Edit Screen
+        </span>
+      </CloseButton>
+    )}
+  </div>
+);
+
 const TeeSelect = ({ setTeeDirection, className, value }) => (
   <div className={className ? `tee_direction ${className}` : 'tee_direction'}>
     <button
@@ -215,8 +266,17 @@ const TeeSelect = ({ setTeeDirection, className, value }) => (
   </div>
 );
 
-const PlayHoleHeader = ({ holeNumber, matchId, totalHoles, completeMatch }) => (
-  <div className="play_hole_btns">
+const NavigateHolesButtons = ({
+  holeNumber,
+  matchId,
+  totalHoles,
+  completeMatch
+}) => (
+  <div
+    className={`navigate_hole_btns ${
+      Number(holeNumber) === 1 ? 'first_hole' : ''
+    }`}
+  >
     {holeNumber > 1 && (
       <Link to={`/play/${matchId}/hole/${Number(holeNumber) - 1}`}>
         <GhostButton>
@@ -237,12 +297,6 @@ const PlayHoleHeader = ({ holeNumber, matchId, totalHoles, completeMatch }) => (
     )}
   </div>
 );
-
-// const mapStateToProps = state => {
-//   return {
-//     storeInSync: state.playMatchState.storeInSync
-//   };
-// };
 
 const mapDispatchToProps = dispatch => {
   return {

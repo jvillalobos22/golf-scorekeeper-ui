@@ -6,14 +6,18 @@ import {
   faArrowLeft,
   faArrowRight,
   faArrowUp,
+  faArrowCircleLeft,
+  faArrowCircleRight,
   faPencilAlt,
   faCaretLeft,
   faCaretRight,
   faCaretDown,
   faCaretUp,
   faCheck,
+  faCheckCircle,
   faExclamation,
   faGolfBall,
+  faTimes,
   faWindowClose
 } from '@fortawesome/fontawesome-free-solid';
 
@@ -26,14 +30,18 @@ fontawesome.library.add(
   faArrowLeft,
   faArrowRight,
   faArrowUp,
+  faArrowCircleLeft,
+  faArrowCircleRight,
   faPencilAlt,
   faCaretLeft,
   faCaretRight,
   faCaretDown,
   faCaretUp,
   faCheck,
+  faCheckCircle,
   faExclamation,
   faGolfBall,
+  faTimes,
   faWindowClose
 );
 
