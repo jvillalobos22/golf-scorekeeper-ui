@@ -17,6 +17,7 @@ import {
 } from '../../redux/actions/matchDetails';
 import Button, { GhostButton } from '../Button/Button';
 import './ShowMatchDetails.css';
+import { getCalculatedPar } from '../../helpers/scoreCalculations';
 
 const ShowMatchDetails = ({
   match,
@@ -119,6 +120,10 @@ const ShowMatchDetails = ({
           return <ScoreCardRow key={hole.id} match={match} hole={hole} />;
         })}
       </div>
+      <span>
+        <strong>Calculated Par:</strong>
+        {getCalculatedPar(match.holes)}
+      </span>
     </div>
   );
 };
@@ -166,4 +171,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(ShowMatchDetails);
-// export default ShowMatchDetails;

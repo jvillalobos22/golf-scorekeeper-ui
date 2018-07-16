@@ -29,9 +29,6 @@ $dark_gray: #919191;
   }
 
   .result {
-    // position: absolute;
-    // top: 0;
-    // right: 0;
     margin-left: auto;
     margin-bottom: auto;
     height: auto;
@@ -41,6 +38,7 @@ $dark_gray: #919191;
     text-align: center;
     width: auto;
     min-width: 140px;
+    box-shadow: 1px 2px 12px rgba(0, 0, 0, 0.2);
     span {
       display: block;
     }

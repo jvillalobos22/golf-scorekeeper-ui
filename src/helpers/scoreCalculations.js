@@ -126,4 +126,18 @@ const getPrettyResult = result => {
   }
 };
 
-export { getHoleResult, getHoleResultStringValue, getPrettyResult };
+const getCalculatedPar = holes => {
+  let sumOfPars = 0;
+  holes.map(hole => {
+    sumOfPars += hole.par;
+    return;
+  });
+  return sumOfPars;
+};
+
+export {
+  getHoleResult,
+  getHoleResultStringValue,
+  getPrettyResult,
+  getCalculatedPar
+};
