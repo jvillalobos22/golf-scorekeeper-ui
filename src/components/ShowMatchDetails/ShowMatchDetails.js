@@ -16,8 +16,9 @@ import {
   doMatchDetailsSuccessClear
 } from '../../redux/actions/matchDetails';
 import Button, { GhostButton } from '../Button/Button';
-import './ShowMatchDetails.css';
 import { getCalculatedPar } from '../../helpers/scoreCalculations';
+import RoundStats from './RoundStats/RoundStats';
+import './ShowMatchDetails.css';
 
 const ShowMatchDetails = ({
   match,
@@ -50,15 +51,18 @@ const ShowMatchDetails = ({
           <FontAwesomeIcon icon="caret-left" size="lg" />&nbsp;&nbsp;All Matches
         </GhostButton>
       </Link>
-      <div className="course_info">
-        <h1>{match.title}</h1>
-        <span>{match.course.name}</span>
-        <span>{match.course.location}</span>
-        <span>Par: {match.par}</span>
-        <span>{match.course.holes} Holes</span>
-      </div>
-      <div className="match_details_date">
-        <span>{getPrettyDate(match.date)}</span>
+      <h1>{match.title}</h1>
+      <div className="match_info">
+        <div className="course_info">
+          <span>{match.course.name}</span>
+          <span>{match.course.location}</span>
+          <span>Par: {match.par}</span>
+          <span>{match.course.holes} Holes</span>
+          <div className="match_details_date">
+            <span>{getPrettyDate(match.date)}</span>
+          </div>
+        </div>
+        <RoundStats holes={match.holes} />
       </div>
       <div className="match_results">
         <span className="score">

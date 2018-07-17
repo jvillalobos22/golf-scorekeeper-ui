@@ -1,0 +1,48 @@
+// Result Colors
+$gold: #ffc107;
+$indigo: #3f51b5;
+$medium_blue: #2196f3;
+$light_blue: #4fc3f7;
+$yellow: #fbc02d;
+$orange: #ff9800;
+$dark_red: #d50000;
+$primary_color: #799f0c;
+$light_green: #f1f8e9;
+$secondary_color: #acbb78;
+$light_red: #ffebee;
+$gray: #e3e3e3;
+$dark_gray: #919191;
+
+.round_stats {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid $gray;
+  box-shadow: 1px 2px 12px rgba(0, 0, 0, 0.2);
+}
+
+.round_stat {
+  display: inline-block;
+  padding: 0.5rem;
+  margin-right: 1rem;
+  text-align: center;
+
+  h6 {
+    color: $dark_gray;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
+  }
+
+  span {
+    color: $primary_color;
+    font-weight: bold;
+  }
+}
+
+.hole_performance_stat {
+  display: block;
+
+  p {
+    display: inline-block;
+  }
+}

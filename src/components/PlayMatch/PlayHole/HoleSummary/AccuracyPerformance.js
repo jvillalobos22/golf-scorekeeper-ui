@@ -1,5 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { getGreenInReg } from '../../../../helpers/scoreCalculations';
 
 const AccuracyPerformance = ({ par, putts, score, teeDirection }) => {
   const getTeeDirectionIcon = teeDirection => {
@@ -25,20 +26,6 @@ const AccuracyPerformance = ({ par, putts, score, teeDirection }) => {
         </div>
       );
     }
-  };
-
-  const getGreenInReg = (par, putts, score) => {
-    const shotsToGreen = score - putts;
-    if (par === 3) {
-      return shotsToGreen === 1 ? true : false;
-    }
-    if (par === 4) {
-      return shotsToGreen < 3 ? true : false;
-    }
-    if (par === 5) {
-      return shotsToGreen < 4 ? true : false;
-    }
-    return false;
   };
 
   return (

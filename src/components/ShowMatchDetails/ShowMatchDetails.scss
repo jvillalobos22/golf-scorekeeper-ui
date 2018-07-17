@@ -124,3 +124,13 @@ $yellow: #ffd600;
   font-weight: 300;
   margin-bottom: 0.5rem;
 }
+
+.match_info {
+  display: flex;
+  align-items: flex-start;
+
+  .course_info {
+    margin-right: 2rem;
+    min-width: 170px;
+  }
+}

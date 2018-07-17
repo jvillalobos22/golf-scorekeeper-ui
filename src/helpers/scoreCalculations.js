@@ -135,9 +135,23 @@ const getCalculatedPar = holes => {
   return sumOfPars;
 };
 
+const getGreenInReg = (par, putts, score) => {
+  const shotsToGreen = score - putts;
+  if (par === 3) {
+    return shotsToGreen === 1 ? true : false;
+  }
+  if (par === 4) {
+    return shotsToGreen < 3 ? true : false;
+  }
+  if (par === 5) {
+    return shotsToGreen < 4 ? true : false;
+  }
+  return false;
+};
 export {
   getHoleResult,
   getHoleResultStringValue,
   getPrettyResult,
-  getCalculatedPar
+  getCalculatedPar,
+  getGreenInReg
 };
