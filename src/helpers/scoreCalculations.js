@@ -148,10 +148,19 @@ const getGreenInReg = (par, putts, score) => {
   }
   return false;
 };
+
+const getMatchScore = holes => {
+  const score = holes.reduce((total, hole) => {
+    return total + hole.score;
+  }, 0);
+  return score;
+};
+
 export {
   getHoleResult,
   getHoleResultStringValue,
   getPrettyResult,
   getCalculatedPar,
-  getGreenInReg
+  getGreenInReg,
+  getMatchScore
 };

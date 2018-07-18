@@ -18,7 +18,9 @@ import {
   faExclamation,
   faGolfBall,
   faTimes,
-  faWindowClose
+  faWindowClose,
+  faQuoteLeft,
+  faQuoteRight
 } from '@fortawesome/fontawesome-free-solid';
 
 import store from './redux/store';
@@ -42,7 +44,9 @@ fontawesome.library.add(
   faExclamation,
   faGolfBall,
   faTimes,
-  faWindowClose
+  faWindowClose,
+  faQuoteLeft,
+  faQuoteRight
 );
 
 ReactDOM.render(

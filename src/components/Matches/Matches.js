@@ -7,6 +7,7 @@ import {
   CreateFirstMatchButton
 } from '../CreateMatch/CreateMatch';
 import MatchCard from '../MatchCard/MatchCard';
+import MatchesHero from '../MatchesHero/MatchesHero';
 import './Matches.css';
 
 class Matches extends Component {
@@ -14,19 +15,26 @@ class Matches extends Component {
     const { matches } = this.props;
     if (!matches) return null;
     return (
-      <div className="pg_width matches">
-        {matches.length > 1 ? (
-          <div className="matches_list flex_container">
-            <div className="matches_topbar">
-              <CreateMatchButton />
+      <div className="matches">
+        {matches.length > 1 && <MatchesHero />}
+        <div className="pg_width">
+          {matches.length > 1 ? (
+            <div className="matches_list flex_container">
+              <div className="matches_topbar">
+                <CreateMatchButton />
+              </div>
+              {matches.map(match => (
+                <MatchCard
+                  key={match._id}
+                  match={match}
+                  className="flex_card"
+                />
+              ))}
             </div>
-            {matches.map(match => (
-              <MatchCard key={match._id} match={match} className="flex_card" />
-            ))}
-          </div>
-        ) : (
-          <NoMatchesMessage />
-        )}
+          ) : (
+            <NoMatchesMessage />
+          )}
+        </div>
       </div>
     );
   }

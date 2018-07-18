@@ -125,11 +125,34 @@ const getRoundTeeAccuracy = (holes, holesScored) => {
   };
 };
 
+const getRoundTeeAccuracyCount = (holes, holesScored) => {
+  let left = 0;
+  let right = 0;
+  let center = 0;
+
+  holes.map(hole => {
+    if (hole.teeDirection === 'LEFT') {
+      left++;
+    } else if (hole.teeDirection === 'CENTER') {
+      center++;
+    } else if (hole.teeDirection === 'RIGHT') {
+      right++;
+    }
+  });
+
+  return {
+    left,
+    right,
+    center
+  };
+};
+
 export {
   getRoundFairwayHits,
   getRoundGreensInRegulation,
   getRoundHolePerformance,
   getRoundMulligans,
   getRoundPuttsPerGreen,
-  getRoundTeeAccuracy
+  getRoundTeeAccuracy,
+  getRoundTeeAccuracyCount
 };
